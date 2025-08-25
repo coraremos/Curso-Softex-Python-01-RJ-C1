@@ -16,14 +16,14 @@ Crie um programa que simula o controle de um robô simples com um menu de comand
 posicao = 0
 titulo = print('Olá, eu sou um robô!')
 while True:
-    comando = int(input('Escolha um comando para que eu possa andar:\n1- Avançar\n2- Recuar\n3- Status\n4- Desligar\nInsira o número da ação: '))
-    if comando == 1:
+    comando = input('Escolha um comando para que eu possa andar:\n1- Avançar\n2- Recuar\n3- Status\n4- Desligar\nInsira o número da ação: '))
+    if comando == '1':
         posicao += 1
-    elif comando == 2:
+    elif comando == '2':
         posicao -= 1
-    elif comando == 3:
+    elif comando == '3':
         print(f'\nMINHA POSIÇÃO ATUAL É {posicao}.\n')
-    elif comando == 4:
+    elif comando == '4':
         print('Programa encerrado.')
         break
     else:
