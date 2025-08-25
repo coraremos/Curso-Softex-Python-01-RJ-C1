@@ -56,7 +56,7 @@ bairro_sao_jose = "sao jose"
 frete_barroco = 5.00
 frete_sao_jose = 15.00
 
-#código venda, esse código irá mudar dentro do loop
+#código venda, esse código irá sendo utilizado dentro do loop
 codigo_venda = 98568
 
 while True:#código para não dar erro no código que ainda não foi finalizado
