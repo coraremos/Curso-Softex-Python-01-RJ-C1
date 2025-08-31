@@ -1,8 +1,4 @@
-'''
-1- Teste se a entrada de dados é um número.
-2- Se for um número teste se é positivo
-3- Para que três lados (lA,lB,lC) formem um triângulo, eles devem obedecer a duas condições importantes:
-'''
+# Desafio de Programação: Validação de Triângulo
 
 while True:
     lA = input('Digite o tamanho do lado A: ')
@@ -10,6 +6,7 @@ while True:
     lC = input('Digite o tamanho do lado C: ')
     lados = [lA,lB,lC]
     for numero in lados:
+        #teste se a entrada de dados é um número e se é positivo:
         if numero.isdigit():
             pass
         else:
@@ -20,22 +17,11 @@ while True:
     lC = int(lC)
 
     for inteiros in lados:
-                if (lB+lC) < lA:
-                    print('ok')
-                elif (lA+lC) < lB:
-                    print('ok')
-                elif (lA+lB) < lC:
-                    print('ok')
-                elif (lB-lC) > lA:
-                    print('ok')
-                elif (lA-lC) > lB:
-                    print('ok')
-                elif (lA-lB) > lC:
-                    print('ok')
-                else:
-                    print('não é um triângulo!!!')
+        #aplicando as duas condições como verdade, 
+        # usando o método abs() para o cálculo de diferenças resultar sempre em um núm absoluto:
+        if (lB+lC) > lA or (lA+lC) > lB or (lA+lB) > lC or abs(lB-lC) < lA or abs(lA-lC) < lB or abs(lA-lB) < lC:
+            print('é um triângulo!')
+        #se as condições acima forem mentira:
+        else:
+            print('não é um triângulo...')
 
-
-'''
-
-'''
