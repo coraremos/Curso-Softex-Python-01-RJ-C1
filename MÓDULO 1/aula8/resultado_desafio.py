@@ -1,4 +1,7 @@
 # Desafio de Programação: Validação de Triângulo
+#ESTUDAR A FORMA DE FAZER COM TRY! 
+# >try: / >except ValueError: / >>print("Erro: entrada inválida!")
+
 
 while True:
     lA = input('Digite o tamanho do lado A: ')
@@ -19,7 +22,7 @@ while True:
     for inteiros in lados:
         #aplicando as duas condições como verdade, 
         # usando o método abs() para o cálculo de diferenças resultar sempre em um núm absoluto:
-        if (lB+lC) > lA or (lA+lC) > lB or (lA+lB) > lC or abs(lB-lC) < lA or abs(lA-lC) < lB or abs(lA-lB) < lC:
+        if (lB+lC) > lA and (lA+lC) > lB and (lA+lB) > lC and abs(lB-lC) < lA and abs(lA-lC) < lB and abs(lA-lB) < lC:
             print('é um triângulo!')
         #se as condições acima forem mentira:
         else:
