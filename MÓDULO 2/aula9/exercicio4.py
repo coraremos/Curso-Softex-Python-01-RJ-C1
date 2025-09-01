@@ -22,6 +22,7 @@ Números coletados: [10, 50, 20]
 while True:
     lista_usuarios = []
     numero_proibido = -1
+
     numero_usuario = input('digite os números de usuarios e interrompa digitando "-1": ')
     if numero_usuario == numero_proibido:
         break
