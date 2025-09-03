@@ -73,8 +73,8 @@ UNIAO = A.union(B)
 print(f'União:{uniao}')
 #saída {1,2,3,4,5,6}
 
-A.intersection()
-B.difference()
+A.intersection(B) #o que no A tem também no B
+B.difference(A) #o que no A não tem no B
 
 '''
 quando os dados não devem ser alterados
