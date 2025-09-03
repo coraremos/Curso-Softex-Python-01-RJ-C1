@@ -84,3 +84,28 @@ quando os dados não devem ser alterados
 minha_tupla = (1,2,3,4,2)
 minha_tupla.count(2) #resulta 2
 minha_tupla.index(2) #resulta 3
+
+_______________________________________________________
+ANOTACOES
+
+vendas = [
+    ("Teclado", 50, 2), 
+    ("Mouse", 25.50, 4), 
+    ("Monitor", 300, 1), 
+    ("Fone", 45, 1),
+    ("Webcam", 75.20, 2)
+]
+
+vendas_tupla= []
+for nome_do_produto, valor, quantidade in vendas:
+    vendas_tupla.append((nome_do_produto, valor, quantidade))
+print(vendas_tupla) #transforma formato LISTA em formato TUPLA
+
+vendas_conjunto = [] #transforma formato LISTA em formato CONJUNTO
+for nome_do_produto, valor, quantidade in vendas:
+    vendas_conjunto.append({nome_do_produto, valor, quantidade})
+print(vendas_conjunto)
+
+#TUPLA É IMUTAVEL
+#CONJUNTO FILTRA AS DUPLICIDADES
+#LISTA É ALTERÁVEL
