@@ -64,7 +64,6 @@ print(f'conjunto após 'add(4)': {numeros}')
       
 '''
 
-'''      
 
 A = {}
 B = {}
@@ -76,10 +75,10 @@ print(f'União:{uniao}')
 A.intersection(B) #o que no A tem também no B
 B.difference(A) #o que no A não tem no B
 
-'''
+
 quando os dados não devem ser alterados
 
-'''
+
 
 minha_tupla = (1,2,3,4,2)
 minha_tupla.count(2) #resulta 2
