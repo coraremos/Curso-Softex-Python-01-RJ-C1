@@ -33,4 +33,18 @@ while True:
      except ValueError:
             print("Erro: entrada inválida!.")
 
-print(registros_acessos)
+usuarios_sucesso = set()
+minutos_cjt = set()
+minutos_soma = 0
+
+for usuario, status, duracao_minutos in registros_acessos:
+    #MINUTOS
+    if status == 1:
+        usuarios_sucesso.add(usuario)
+        minutos_cjt.add(duracao_minutos)
+
+minutos_soma = sum(minutos_cjt)
+
+print(f'Registros de acessos:{registros_acessos}.')
+print(f'Usuários com acesso bem-sucedidos: {usuarios_sucesso}.')
+print(f'Tempo total das sessões bem-sucedidas: {minutos_soma} minutos.')
