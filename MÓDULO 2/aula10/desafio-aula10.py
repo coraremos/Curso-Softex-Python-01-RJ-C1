@@ -1,6 +1,3 @@
-'''
-em desenvolvimento
-'''
 print('Análise de Dados de Acessos!')
 
 registros_acessos = []
