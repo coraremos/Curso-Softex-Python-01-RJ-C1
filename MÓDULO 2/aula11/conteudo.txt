@@ -1,0 +1,84 @@
+DICIONÁRIOS (chave X valor)
+
+- usam chaves {} porém são diferentes de conjuntos.
+
+variavel = {'chave':"valor", 'chave':"valor"}
+
+dicionário = {} >cria um dicionario vazio
+
+dicionario = {
+    "usuario": "Nome",
+    "senha": 123
+}
+
+dicionario[chave]
+print(dicionario["usuario"]) #saída: Nome
+
+.get() - usado para evitar erros quando buscar chaves sem valores (saída: Não informado)
+
+>adicionar uma chave no dicionario:
+
+dicionario["nome"] = "Cora"
+
+>nova saída: dicionario = {"usuario": "Nome", "senha": 123, "nome": "Cora"}
+
+atualizar valor: dicionario["usuario"] = "corarwho"
+
+nova saída: dicionario = {"usuario": "corarwho", "senha": 123, "nome": "Cora"}
+
+>apagar a chave
+
+del dicionario["nome"]
+print(dicionario)
+nova saída: dicionario = {"usuario": "corarwho", "senha": 123}
+
+>remove o item e retorna o valor que foi removido
+
+informacao_removida = dicionario.pop("senha")
+print(informacao_removida) #saída: 123
+
+
+
+__exemplo pratico
+
+precos = {
+    "arroz": 12.50, 
+    "feijao": 8.90, 
+    "macarrao": 4.00
+}
+
+#quando faço um for pra uma variavel temporaria em um dicionario, ele acessa somente as chaves
+for item in precos:
+    print(f"Lista de mercado: {item}") 
+    
+'''
+saída:
+Lista de mercado: arroz
+Lista de mercado: feijao
+Lista de mercado: macarrao 
+'''
+
+#para acessar somente os valores das chaves: .values()
+for preco in preco.values()
+    print(f"Preço: R${preco:.2f}")
+
+'''
+saída: 
+Preço: R$12.50
+Preço: R$8.90
+Preço: R$4.00
+'''
+
+#para pegar a chave E o valor dentro dela: .items()
+for item, preco in precos.items():
+    print(f"O preco do {item} é R${preco:.2f}")
+
+'''
+saída: 
+O preço do arroz é R$12.50
+O preço do feijao é R$8.90
+O preço do macarrao é R$4.00
+'''
+
+except ValueError:
+except KeyError:
