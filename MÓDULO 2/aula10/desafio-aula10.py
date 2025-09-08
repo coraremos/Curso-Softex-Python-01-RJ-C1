@@ -35,7 +35,6 @@ while True:
 
 usuarios_sucesso = set()
 minutos_cjt = set()
-minutos_soma = 0
 
 for usuario, status, duracao_minutos in registros_acessos:
     #MINUTOS
