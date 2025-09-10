@@ -1,0 +1,65 @@
+--------------------explicacao_conjunto.py
+
+frutas = {"maçã", "banana", "laranja"}
+
+# Duplicatas são automaticamente removidas
+frutas = set(["maçã", "banana", "laranja", "banana"])
+
+A = {1, 2, 3}
+B = {3, 4, 5}
+
+print(A.union(B))                 # {1, 2, 3, 4, 5}
+print(A.intersection(B))          # {3}
+print(A.difference(B))            # {1, 2}
+print(A.symmetric_difference(B))  # {1, 2, 4, 5}
+
+frutas = {"maçã", "banana"}
+
+frutas.add("laranja")     # Adiciona
+frutas.remove("banana")   # Remove (erro se não existir)
+frutas.discard("uva")     # Remove se existir (sem erro)
+
+frutas = {"maçã", "banana", "laranja"}
+
+for fruta in frutas:
+    print(fruta)
+
+produtos = {
+    ("produto1", 10, 2.5),
+    ("produto2", 5, 4.0),
+    ("produto3", 8, 3.25)
+}
+
+for nome, qtd, preco in produtos:
+    total = qtd * preco
+    print(f"{nome}: {qtd} unidades x R${preco:.2f} = R${total:.2f}")
+
+----------------------- explicacao_tupla.py
+
+minha_tupla = (1, 2, 3, 4, 2)
+
+minha_tupla.count(2) # Resultado: 2
+
+minha_tupla.index(3) # Resultado: 2
+
+
+lista = [1,2,3,4]
+tupla = tuple(lista)
+print(f"tupla {tupla}")
+lista = list(tupla)
+print(f"lista {lista}")
+
+pessoas = [("Ana", 25), ("Bruno", 30), ("Carlos", 28),]
+
+for nome, idade in pessoas:
+    print(f"{nome} tem {idade} anos.")
+
+# for item in pessoas:
+#     print(item)
+
+----------------------- explicacao_2.py
+
+dicionario = {"nome": "anderson"}
+
+for item in dicionario.items():
+    print(item)

@@ -1,0 +1,74 @@
+Exercícios de Dicionários em Python (Do Básico ao Avançado)
+
+Nível 1: Fundamentos (Exercícios 1-5)
+
+1. Crie um dicionário com 3 nomes de frutas e seus preços. Imprima o dicionário completo.
+2. A partir do dicionário do exercício 1, acesse e imprima apenas o preço da segunda fruta.
+3. Crie um dicionário vazio. Adicione 3 pares de chave-valor. Imprima o dicionário.
+4. Crie um dicionário com os nomes de 3 países e suas capitais. Peça ao usuário para
+digitar o nome de um país e imprima a capital correspondente. Use dicionario.get() para
+evitar erros.
+5. Crie um dicionário com 3 produtos e suas quantidades em estoque. Peça ao usuário para
+digitar um nome de produto e uma quantidade para adicionar. Atualize o estoque e
+imprima o dicionário.
+
+Nível 2: Manipulação e Iteração (Exercícios 6-10)
+
+6. Crie um dicionário com 4 nomes e idades. Percorra o dicionário e imprima cada nome e
+idade no formato "Nome: [Nome], Idade: [Idade]".
+7. Usando o dicionário do exercício anterior, imprima apenas os nomes. Depois, imprima
+apenas as idades.
+8. Crie um dicionário com produtos e preços. Peça ao usuário para digitar um produto para
+remover. Remova-o do dicionário e imprima o dicionário final. Use if para verificar se o
+produto existe antes de remover.
+9. Crie um dicionário com os nomes de 5 alunos e suas notas. Percorra o dicionário e
+imprima apenas os alunos que tiraram nota maior que 7.
+10. Crie um dicionário com cores e seus códigos hexadecimais. Use um loop while para
+permitir que o usuário procure o código de uma cor repetidamente. O loop deve terminar
+quando o usuário digitar "sair".
+
+Nível 3: Integração com Outras Estruturas (Exercícios 11-15)
+
+11. Crie uma lista de dicionários, onde cada dicionário representa um filme com "título" e
+"ano". Imprima o ano do segundo filme da lista.
+12. Crie um dicionário onde a chave é o nome de um time e o valor é uma lista com os nomes
+de 3 jogadores. Imprima o nome do segundo jogador do segundo time.
+13. Crie um dicionário que use tuplas como chaves. As chaves devem ser coordenadas (x, y)
+e os valores, o nome de um local. Peça ao usuário para digitar as coordenadas e imprima
+o local.
+14. Dada uma lista de palavras, crie um dicionário que conte a frequência de cada palavra.
+15. Crie um dicionário com os nomes de 3 pessoas e seus hobbies (em formato de conjunto).
+Peça ao usuário para digitar o nome de uma pessoa e imprima seus hobbies.
+
+Nível 4: Desafios de Lógica (Exercícios 16-20)
+
+16. Inversão de Dicionário: Crie um dicionário. Troque as chaves pelos valores e os valores
+pelas chaves. Dica: Os valores devem ser únicos para que isso funcione.
+17. Criação com Condição: Crie um dicionário a partir de uma lista de números, onde a
+chave é o número e o valor é "par" ou "ímpar".
+18. União de Dicionários: Crie dois dicionários. Crie um terceiro dicionário que seja a união
+dos dois primeiros. Se uma chave existir em ambos, use o valor do segundo dicionário.
+19. Análise de Dados: Dada uma lista de dicionários de produtos (com nome e preço),
+encontre e imprima o nome e o preço do produto mais caro.
+20. Vendas Simples: Crie um dicionário de estoque e outro de vendas. Simule uma venda,
+diminuindo a quantidade no estoque e adicionando a venda ao dicionário de vendas. Use
+if para garantir que há estoque suficiente.
+
+Nível 5: Casos de Uso e Aplicações Complexas (Exercícios 21-25)
+
+21. Agenda de Contatos: Crie um sistema simples de agenda que use um dicionário. Use
+um loop while para mostrar um menu com opções de "adicionar contato", "buscar
+contato" e "sair".
+22. Sistema de Pontuação: Crie um dicionário de jogadores e suas pontuações iniciais.
+Simule uma rodada de jogo, atualizando a pontuação de um jogador específico. Permita
+que o usuário adicione novos jogadores e pontue-os.
+23. Conversor de Unidades: Crie um dicionário onde as chaves são unidades de medida
+(ex: "metros", "quilômetros") e os valores são seus fatores de conversão para uma base
+única (ex: para metros). Peça ao usuário uma quantidade e uma unidade para converter.
+24. Sistema de Inventário: Crie um dicionário de inventário de um jogo (ex: "espada":
+{"dano": 50, "peso": 2.5}). Permita que o usuário insira um item no inventário com suas
+características e liste todos os itens.
+25. Gerenciamento de Tarefas: Crie um dicionário para gerenciar tarefas. As chaves são os
+nomes das tarefas, e os valores são listas de status (ex: ["pendente", "em andamento",
+"concluído"]). Peça ao usuário para adicionar uma tarefa e seu status. Depois, imprima
+apenas as tarefas com status "pendente".
