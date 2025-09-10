@@ -5,3 +5,5 @@ def exibir_pedido(item: str, *extras: str, **observacoes: str) -> None:
 
 
 exibir_pedido("Pizza", "Queijo extra", "Bacon", borda="recheada")
+
+# -> None significa que ele vai me retornar nada, pois ele irá printar no final.
