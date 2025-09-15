@@ -14,7 +14,20 @@ lambda > cria uma função de uma linha
 ex.: borda="recheada" > e irá retornar " {'borda': 'recheada'} "
 
 '''
-
+#tipos de retorno possíveis com arrow "->":
+'''
+-> int: — retorna um número inteiro.
+-> float: — retorna um número decimal.
+-> str: — retorna uma string (texto).
+-> list: — retorna uma lista.
+-> tuple: — retorna uma tupla.
+-> bool: — retorna um valor booleano (True ou False).
+-> None: — indica que a função não retorna nada.
+-> set: — retorna um conjunto.
+-> Any: — pode retornar qualquer tipo (precisa importar de typing).
+-> dict[str, int]: — retorna um dicionário com tipos específicos 
+(precisa importar de typing ou usar Python 3.9+).
+'''
 
 #---CHAMAR A FUNÇÃO: (def)INIR uma função - nome()
 
