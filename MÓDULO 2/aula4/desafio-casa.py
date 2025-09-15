@@ -1,4 +1,5 @@
-'''
+''' EXERCICIO 1
+
 Crie um programa que recebe uma frase do usuário e faz uma análise completa sobre ela,
 mostrando:
 ● A quantidade de palavras na frase.
@@ -15,39 +16,29 @@ Consoantes: 6
 É um palíndromo? Sim
 '''
 
-vogais = 0
-consoantes = 0
-vogal = 'aeiouáéíóú'
-consoante = 'bcdfghjklmnpqrstvxwzñç'
-
 frase = input('Digite aqui uma frase: ').lower().replace("-","").replace(",","").replace(".","")
 
-palavras = ""
+def quant_palavras(frase:str) -> int:
+    return len(frase.split())
 
-for palavra in frase:
-    palavras = len(frase.split())
+def quant_vogais(frase:str) -> int:
+     lista_vogais = 'aeiouáéíóú'
+     return sum(1 for letra in frase if letra in lista_vogais)
 
-frase = frase.replace(" ","")
-indice = len(frase) - 1
-frase_invertida = ''
-for letra in frase:
-        if letra in vogal:
-            vogais += 1
-        if letra in consoante:
-            consoantes += 1
-        if indice >= 0:
-            frase_invertida += frase[indice]
-            indice -= 1
-            if frase == frase_invertida:
-                resposta = 'Sim'
-            else:
-                resposta = 'Não'
+def quant_consoantes(frase:str) -> int:
+     lista_consoantes = 'bcdfghjklmnpqrstvxwzñç'
+     return sum(1 for letra in frase if letra in lista_consoantes)
+     
+def result_palindromo(frase: str) -> str:
+    frase_inicial = frase.replace(" ","")
+    return 'Sim' if frase_inicial == frase_inicial[::-1] else 'Não'
+
+palavras = quant_palavras(frase)
+vogais = quant_vogais(frase)
+consoantes = quant_consoantes(frase)
+resposta = result_palindromo(frase)
 
 print(f'Palavras: {palavras}.')
 print(f'Vogais: {vogais}.')
 print(f'Consoantes: {consoantes}.')  
 print(f'É um polímetro: {resposta}')   
-
-
-
-
