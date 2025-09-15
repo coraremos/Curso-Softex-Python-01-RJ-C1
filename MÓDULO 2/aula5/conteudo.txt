@@ -1,0 +1,23 @@
+Programação orientada a objetos: Módulos
+
+
+"import"
+
+> import math #pega a caixa de ferramentas 'math' ou matemática
+
+#precisa do prefixo 'math.'
+raiz = math.sqrt(25)
+
+A SOLUÇÃO: from e import
+
+from math import sqrt #pega apenas a ferramenta 'sqrt'
+#use a ferramenta diretamente depois
+raiz = sqrt(25)
+
+(Ver a biblioteca python, entender onde fica cada informação)
+
+
+
+
+
+
