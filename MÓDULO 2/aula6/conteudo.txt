@@ -1,0 +1,63 @@
+CLASSES EM PYTHON
+
+classe do tipo string tem seus próprios métodos/funções que podem acontecer
+
+O MOLDE É A CLASSE. ele tem o formato e define como todo o biscoito(variável) será (tipo int, tipo float, tipo bool...).
+cada BISCOITO que você faz é um OBJETO.
+
+Classe é a receita, a planta, o molde. O OBJETO é a coisa real que você cria a partir do molde.
+
+>>> "Programação orientada a objetos"
+
+#class significa que estamos criando um molde
+#'Cachorro' é o nome que damos ao nosso molde (sim, primeira letra em maiúsculo aqui)
+class Cachorro:
+    pass #pass quer dizer 'por enquanto, tem nada aqui dentro'
+
+
+class Cachorro:
+    def __init__(self, nome_do_cao, cor_do_pelo):
+        print(f"Um novo cachorro chamado {nome_do_cao} nasceu!")
+        #vamos guardar essaas informações no próximo slide...
+
+__init__ : definir características básicas como parâmetro 'self', traduzindo, colocar as características 'para si'.
+#self é auto declarável:
+
+
+class Cachorro:
+    def __init__(self, nome_do_cao, cor_do_pelo):
+        #o nome DESTE cachorro será:
+        self.nome = nome_do_cao
+        self.cor = cor_do_pelo
+    
+ATRIBUIR UMA CLASSE A UMA variável
+
+rex = Cachorro("Rex", "Marrom") #INSTANCIANDO A função 'INIT' AUTOMATICAMENTE, DANDO ATRIBUTO AS VARIÁVEIS.
+
+Toda variável que recebe uma classe, é um objeto.
+
+criou a variável 'rex' como classe de 'Cachorro'
+puxar a característica:
+
+print(red.cor) #saída: Marrom
+
+#AQUI É UMA VARIÁVEL
+class Cachorro:
+    def __init__(self, nome_do_cao, cor_do_pelo):
+        #o nome DESTE cachorro será:
+        self.nome = nome_do_cao
+        #a cor será:
+        self.cor = cor_do_pelo
+
+#AQUI É UMA FUNÇÃO
+    #isso é um método/função. uma ação que o objeto pode fazer:
+    def latir(self):
+        print(f"{self.nome} diz: Au au!")
+        #customizou outra ação, 
+    
+rex.latir() #saída: 'Rex diz: Au au!'
+
+
+MOLDE COMPLETO: 
+
+
