@@ -1,5 +1,5 @@
-while True:
-    def operar_conta(conta):
+def operar_conta(conta):
+    while True:
         print("\nEscolha sua ação:")
         print("1) Ver saldo")
         print("2) Depositar")
@@ -8,7 +8,7 @@ while True:
         escolha = input("Digite o número da ação: ")
         
         if escolha == "1":
-            print(f"Conta bancária de {conta.titular} possui saldo de R${conta.saldo}")
+            conta.extrato()
         elif escolha == "2":
             conta.depositar(float(input("Digite o valor que deseja depositar: ")))
         elif escolha == "3":
