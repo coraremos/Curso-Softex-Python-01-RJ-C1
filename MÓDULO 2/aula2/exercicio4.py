@@ -29,9 +29,8 @@ notas = [
 
 #transformar em conjunto
 somente_nota = set()
+
 maior_nota = []
-
-
 
 for aluno, nota in notas:
     #ordenar em forma crescente
