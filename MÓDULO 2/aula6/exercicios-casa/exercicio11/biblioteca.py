@@ -10,11 +10,11 @@ class Livro:
 
 #2. A classe Biblioteca terá um atributo acervo, que começa como uma lista vazia [].
 class Biblioteca:
-    def __init__(self, acervo:list):
-        self.acervo = acervo 
+    def __init__(self):
+        self.acervo = [] 
 
     #adicionar_livro(livro)
-    def adicionar_livro(self, livro):
+    def adicionar_livro(self, livro: Livro):
         '''recebe um objeto Livro e o adiciona à lista acervo.'''
         self.acervo.append(livro)    
 
