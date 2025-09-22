@@ -1,0 +1,24 @@
+ENCAPSULAMENTO
+
+#GETTER: apenas retorna o valor
+    def get_preco(self):
+        return self.get_preco
+
+#SETTER: contena lógica de validação
+    def set_preco(self, novo_preco):
+        if novo_preco >= 0:
+            self._preco = novo _preco
+        else:
+            print('erro: o preço não pode ser negativo')
+
+
+            ---> o underline é uma 'convenção', um costume de representar a validação
+
+            --> quando coloca dois underlines o programa dá erro, entende que é um valor sigiloso
+        __________________________
+
+DECORADOR PROPERTY
+@property
+
+DECORADOR SETTER
+@preco.setter
