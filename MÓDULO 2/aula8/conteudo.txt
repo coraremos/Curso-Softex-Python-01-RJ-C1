@@ -1,0 +1,49 @@
+-> HERANÇA
+
+Classe Super, Classe SUB.
+
+Classe Pai (Superclasse)
+Classe Filho (Subclasse)
+
+class Filho(Pai)
+
+EXEMPLO:
+
+class Animal:
+    def __init__ (self, nome, idade): #init é um método construtor
+        self.nome = nome
+        self.idade = idade
+
+class Cachorro(Animal):
+    def __init__(self, nome, idade, raca): 
+    super().__init__(nome, idade) #a classe está já puxando todas as especificidades da classe "Animal" e designando aqui
+    self.raca = raca
+
+>>>>> a linha super().__init__(nome, idade) chama o __init__ da classe animal
+
+
+
+-> POLIMORFISMO "muitas formas"
+
+class Animal:
+    def __init__(self, nome, idade):
+        self.nome = nome
+        self.idade = idade
+    
+    def som(self):
+        pass
+
+class Cachorro(Animal):
+    def __init__(self, nome, idade, raca):
+        super().__init__(nome, idade)
+        self.raca = raca #será unicamente Cachorro essa raça
+
+cao = Cachorro("Rex", 4 , "Vira_lata")
+print(cao.nome)
+print(cao.idade)
+print(cao.raca)
+
+
+A herança pré define alguns métodos,
+o Polimorfismo permite alterar alguns pré-definidos.
+
