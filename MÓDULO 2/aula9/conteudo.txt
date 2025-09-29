@@ -57,3 +57,8 @@ class Computador:
         self.processador.ligar()
         self.memoria.carregar()
         print("O computador esta pronto para uso")
+
+
+-> treinar listas e dicionários
+-> treinar modelos Django
+
