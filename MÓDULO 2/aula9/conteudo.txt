@@ -1,0 +1,59 @@
+COMPOSIÇÃO  (poo para quando formos trabalhar com Django)
+
+herança representa uma relação hierárquica (hierarquia de classes)
+
+Objetos-peças:
+
+O carro não é um motor, ele é composto por: 1 motor, 4 rodas, etc.
+
+Uma classe é composta por outra classe!
+
+>> "tem um"
+
+class Motor:
+    def ligar_motor(self):
+        print("Motor ligou!")
+    def desligar_motor(self):
+        print("Motor desligou.")
+
+class Carro:
+    #o método construtor __init__ é o lugar ideal para "montar" o objeto.
+    def __init__(self):
+        #aqui está a composição, o carro "tem um" motor.
+        self.motor = Motor()
+
+    #outros métodos da classe carro...
+    def ligar(self):
+        print("O carro está ligando..")
+        self.motor.ligar_motor()
+
+ou
+
+class MotorEletrico:
+    def ligar_motor(self):
+        print("motor eletrico ligou silenciosamente")
+class CarroEletrico:
+    def __init__(self):
+        self.motor = MotorEletrico()
+
+ou
+
+class Processador:
+    def ligar(self):
+        print("processsador ligado.")
+class Memoria:
+    def carregar(self):
+        print("memória carregada.")
+
+class Computador:
+
+    def __init__(self):
+        self.processador = Processador()
+        self.memoria = Memoria()
+
+    #o metodo ligar delega a funcionalidade para as suas partes
+    def ligar(self):
+        print ("o computador esta inicializando")
+        self.processador.ligar()
+        self.memoria.carregar()
+        print("O computador esta pronto para uso")
