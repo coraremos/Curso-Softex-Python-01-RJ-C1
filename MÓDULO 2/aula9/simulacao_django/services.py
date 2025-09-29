@@ -16,7 +16,8 @@ class UsuarioService:
         return usuario
 
     def get_usuario(self, id_: int) -> Usuario | None:
-        return db_usuarios.get(id_)
+        #retorna o valor da chave id_ se existir no dicionario
+        return db_usuarios.get(id_) #db_usuarios[id_] ->pode dar erro
 
 
 class PostagemService:
@@ -37,3 +38,10 @@ class PostagemService:
 
     def get_postagem(self, id_: int) -> Postagem | None:
         return db_postagens.get(id_)
+
+
+'''
+DESAFIOS: 
+- PEGAR POSTAGEM POR ID, NOME DO USUARIO
+- CRIAR MAIS POSTAGENS DE UM USUARIO E VOLTAR UMA LISTA
+'''

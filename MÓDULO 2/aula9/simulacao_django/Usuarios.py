@@ -30,3 +30,14 @@ class Usuario(Model):
 
     def __str__(self) -> str:
         return f"Usuário(id={self.id}, nome='{self.nome}', email='{self.email}')"
+
+
+'''
+DESAFIOS: PEGAR O USUARIO POR NOME E EMAIL
+buscar localizar o usuario pelo nome, 
+
+lembrar como fazer interação entre dicionários
+
+++ REFINAR AS CARACTERISTICAS QUE UM EMAIL DEVE TER PARA PASSAR COMO VÁLIDO
+
+'''
