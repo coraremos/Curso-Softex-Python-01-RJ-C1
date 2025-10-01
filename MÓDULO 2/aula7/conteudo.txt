@@ -7,7 +7,7 @@ ENCAPSULAMENTO
 #SETTER: contena lógica de validação
     def set_preco(self, novo_preco):
         if novo_preco >= 0:
-            self._preco = novo _preco
+            self._preco = novo_preco
         else:
             print('erro: o preço não pode ser negativo')
 
