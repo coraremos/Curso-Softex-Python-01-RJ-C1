@@ -1,0 +1,51 @@
+O Gerenciador de Loja
+
+Imagine que você está construindo um sistema simples para uma loja de eletrônicos e outros
+produtos. Seu objetivo é criar um programa que organize e gerencie o estoque, usando a
+Programação Orientada a Objetos para deixar tudo mais claro e eficiente.
+
+Etapa 1: O Produto Genérico (no arquivo produto.py)
+Toda loja vende produtos. O produto é a "peça" principal do nosso sistema. Vamos criar um
+molde genérico que todo produto terá.
+Seu trabalho aqui:
+● Crie uma classe (o nosso molde) chamada Produto.
+● Essa classe deve ter um nome, um preco e uma quantidade_em_estoque.
+● Para garantir que as informações sejam acessadas e modificadas de forma organizada,
+implemente um método "getter" para o preço. Isso nos ajuda a manter o código limpo.
+● Adicione um método "setter" para atualizar a quantidade em estoque.
+
+Etapa 2: O Produto Eletrônico Especializado (no arquivo
+produto_eletronico.py)
+Um produto eletrônico é um produto, mas tem algumas características extras, como a
+garantia.
+Seu trabalho aqui:
+● Crie uma classe chamada ProdutoEletronico que herda (pega emprestado) todas as
+características da classe Produto. Isso é chamado de Herança.
+● Adicione um atributo tempo_garantia_meses a esta classe.
+
+Etapa 3: A Loja (no arquivo loja.py)
+Uma loja contém muitos produtos. Ela é como um grande contêiner que guarda tudo. Isso é o
+conceito de Composição.
+Seu trabalho aqui:
+● Crie uma classe chamada Loja.
+● Esta classe deve ter uma lista para guardar todos os objetos Produto.
+● Use um dicionário para gerenciar o estoque de cada produto, onde a "chave" é o nome
+do produto e o "valor" é a quantidade disponível.
+● Crie um método adicionar_produto_ao_estoque() que recebe um produto e a quantidade,
+e o adiciona à sua lista e ao seu dicionário de estoque.
+● Crie um método verificar_estoque_de_produto() que retorna a quantidade em estoque
+de um produto específico.
+
+Etapa 4: Juntando Tudo (no arquivo main.py)
+Este é o arquivo principal, onde você vai "abrir a loja" e ver tudo funcionando.
+Seu trabalho aqui:
+● Importe as classes Loja e ProdutoEletronico que você criou.
+● Crie uma instância (um objeto) da sua Loja.
+● Crie pelo menos dois objetos de produto, sendo um Produto genérico e outro um
+ProdutoEletronico.
+● Use os métodos que você criou para:
+○ Adicionar os produtos ao estoque da sua Loja com quantidades diferentes.
+○ Usar o setter do produto para atualizar a quantidade em estoque, simulando uma
+venda.
+● Chame o método verificar_estoque_de_produto() para mostrar que o estoque foi
+atualizado corretamente.
