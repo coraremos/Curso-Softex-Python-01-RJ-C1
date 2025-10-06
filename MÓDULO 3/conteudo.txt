@@ -1,0 +1,6 @@
+BANCO DE DADOS
+
+SQL - LINGUAGEM DE CONSULTA ESTRUTURADA
+(structure query language)
+
+
