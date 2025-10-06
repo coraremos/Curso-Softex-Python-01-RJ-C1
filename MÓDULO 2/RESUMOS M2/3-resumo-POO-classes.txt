@@ -1,0 +1,77 @@
+Os 4 Pilares da Programação Orientada a Objetos
+    Abstração:          Simplificar o mundo real.
+    Encapsulamento:     Proteger dados internos.
+    Herança:            Reutilizar código e criar hierarquias.
+    Poliformismo:       Sobrescrita de método, flexibilidade, "muitas formas".
+
+    Herança + Polimorfismo = Código Forte
+
+
+O MOLDE é a CLASSE. Ele tem o formato e define como todo biscoito será.
+Cada BISCOITO que você faz é um OBJETO.
+
+Classe: É o molde. A ideia geral de alguma coisa (Ex: a forma de Cachorro).
+Objeto: É a coisa real que você cria com o molde (Ex: o cachorro Rex).
+Atributos: São as características do objeto (Ex: nome, cor). O que ele é.
+Métodos: São as ações que o objeto sabe fazer (Ex: latir()). O que ele faz.
+
+CLASSE:
+    class Cachorro:
+
+FUNÇÃO ESPECIAL :
+    __init__        (para definir as características básicas do molde)
+    __str__         ?
+
+    class Cachorro:
+        def __init__(self, nome, cor):
+
+ATRIBUTOS: "etiquetas" que guardam a informação de cada característica
+    self.nome = nome 
+    self.cor = cor
+    #o nome desse molde será...
+
+INSTANCIAR: criar os "biscoitos", ou seja, os objetos.
+    rex = Cachorro("Rex", "Marrom")
+
+MÉTODOS: funções que ficam dentro do molde
+    def latir(self):
+        print("au au")
+
+
+RESUMO DE HERANÇA: (é um)
+
+    Classe Pai (Superclasse): A "mãe". Ela define o que é comum a todos.
+    Classe Filho (Subclasse): A "filha". Herda as características da mãe e pode ter as suas próprias.
+    
+    class Filho(Pai):
+
+
+    --- aplicação ---
+
+    class Animal:
+        def __init__(self, nome, idade):
+            self.nome = nome
+            self.idade = idade
+        
+    class Cachorro(Animal):
+        def __init__(self, nome, idade, raca):
+            super().__init__(nome,idade)
+            self.raca = raca
+
+RESUMO DE COMPOSIÇÃO: (tem um)
+     composição é como montar um brinquedo com blocos Lego. 
+     Cada bloco é um objeto independente que você encaixa para formar um objeto maior e mais complexo.
+
+    class Motor:
+        def ligar_motor(self):
+            print("Motor ligou!")
+        def desligar_motor(self):
+            print("Motor desligou.")
+
+    class Carro:
+        def __init__(self):
+            self.motor = Motor()
+    
+    Motor.ligar_motor(Carro)
+    Motor.desligar_motor(Carro)
+

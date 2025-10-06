@@ -1,0 +1,52 @@
+Encapsulamento, Getters, Setters e a Mágica do @property
+
+ENCAPSULAMENTO, o que é? 
+    é o princípio de proteger os dados (atributos) 
+    e controlar o acesso a eles através de métodos. 
+    É como colocar os atributos em um "cofre" 
+    e fornecer uma interface segura para interagir com eles.
+
+    Objetivo: Esconder a complexidade interna 
+    e evitar modificações diretas e perigosas nos atributos.
+
+    Como fazemos isso em Python? 
+    Usamos uma convenção: prefixar o nome do atributo com um underscore (_).
+
+Para trabalhar com nosso atributo protegido de forma segura, criamos dois tipos de métodos:
+
+GETTER (Acessor): Um método para ler/obter o valor do atributo.
+
+    class Produto:
+        def __init__(self, nome, preco):
+            self.nome = nome
+            self.preco = preco
+        
+        def get_preco(self):
+            return self._preco
+
+
+SETTER (Modificador): Um método para definir/alterar o valor, aplicando regras e validações.
+
+        def set_preco(self, novo_preco):
+            if novo_preco >= 0:
+                self._preco = novo_preco
+            else:
+                print("Erro: O preço não pode ser negativo")
+
+PROPERTY: nos permite transformar um método em um atributo "virtual" de somente leitura.
+    Ele nos dá o melhor dos dois mundos: a simplicidade do acesso direto com a segurança de um método.
+
+    Para permitir a modificação controlada, usamos um segundo decorador: @<nome_da_property>.setter. 
+    Ele "conecta" a lógica do nosso antigo método set_preco à atribuição produto.preco = novo_valor.
+
+Por que abandonar get_ e set_ em favor de @property?
+
+API Limpa e Intuitiva: O acesso aos atributos permanece natural (objeto.atributo), 
+como se não houvesse lógica por trás. Isso é chamado de "Princípio do Acesso Uniforme".
+
+Encapsulamento Real: Você esconde completamente a lógica de validação do usuário da sua classe. 
+Ele não precisa saber se preco é um atributo real ou um método disfarçado.
+
+Manutenção Facilitada: Você pode começar com um atributo público simples e, 
+se depois precisar adicionar validações, pode transformá-lo em uma @property 
+sem quebrar o código que já usava sua classe. A interface externa (a forma de acesso) não muda.

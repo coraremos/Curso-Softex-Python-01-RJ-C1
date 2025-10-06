@@ -1,0 +1,56 @@
+
+
+SINTAXE
+
+def             Definir Função (cria uma função)
+nome()          Chamar Função (executa a função)
+return          Devolver Valor (devolve um valor e encerra a função)
+*               Args Variáveis (empacota argumentos em uma tupla)
+**              Kwargs Variáveis (empacota argumentos nomeados em um dicionário)
+lambda          Função Anônima (cria uma função de uma linha)
+
+
+assim como print() é uma função PRONTA/NATIVA do python, podemos definir novas funções usando 'def'.
+
+TIPAGEM: uma boa prática
+
+    A tipagem ajuda a entender o que a função espera receber e o que ela vai devolver.
+    def função(a:str, b:int) -> bool:
+        return print(a, b)
+    
+    define que a receberá valor str, b receberá int e ambos sairão como bool.
+
+Argumentos Variáveis (*args)
+    O * empacota todos os argumentos extras em uma tupla.
+
+    def somar_todos_os_numeros(*numeros):
+        total = 0
+        for num in numeros:
+            total += num
+        return total
+    
+    print(somar_todos_os_numeros(1,2,3))
+    >> 6
+
+Argumentos Nomeados Variáveis (**kwargs)
+    O **kwargs (de keyword arguments) é para quando você quer passar um número variável de argumentos com um nome (chave).
+    O ** empacota os argumentos extras em um dicionário.
+
+    def exibir_perfil(**info):
+        for chave, valor in info.items():
+            print(f'{chave}: {valor}')
+    exibir_perfil(nome="Maria", idade="30", cidade="Rio")
+
+    SAÍDA:      nome: Maria
+                idade: 30
+                cidade: Rio
+
+Funções Lambda
+    Para tarefas muito simples, de uma única linha, podemos usar uma função lambda. Elas são funções anônimas (sem nome).
+    Sintaxe: lambda argumentos: expressão
+
+    dobrar = lambda x: x**2
+    print(dobrar(5))
+
+        SAÍDA: 25
+

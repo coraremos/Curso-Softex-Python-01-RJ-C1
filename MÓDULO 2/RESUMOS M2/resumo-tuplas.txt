@@ -1,0 +1,12 @@
+Tuple: Coleções ordenadas e imutáveis.
+    Usar quando a ordem é importante e os dados não devem ser alterados;
+    Você precisa de uma coleção imutável (por exemplo, para chaves de dicionário);
+    A performance de criação é um fator crítico (tuplas são geralmente mais rápidas).
+
+tuple(): converte outro tipo em Tupla
+
+SUMARIO
+    count() 	Returns the number of times a specified value occurs in a tuple
+    index()     Searches the tuple for a specified value and returns the position of where it was found
+
+

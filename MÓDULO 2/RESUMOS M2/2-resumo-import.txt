@@ -1,0 +1,38 @@
+IMPORT/FROM IMPORT
+
+import:         Bom para bibliotecas que você usa muito.
+from import:    Ótimo para deixar o código limpo e direto.
+
+Sempre prefira importar o que você precisa.
+Evite o uso do * para evitar problemas futuros.
+
+
+O import tradicional - usar com prefixo: modulo.ferramenta()
+
+    import math
+    raiz = math.sqrt(25)
+
+O from e import - sem prefixo: ferramenta()
+
+    from math import sqrt
+    raiz = sqrt(25)
+
+o import completo: *
+
+    from operacoes import *
+        #importa tudo dentro de operacoes, ou seja, as ferramentas somar() e subtrair()
+
+o import random: 'from random import ...'
+    importa funções de sorteio
+
+    from random import choice
+
+    numeros = [1,2,3]
+    escolhido = choice(numeros)
+    print(f'o número sorteado é: {escolhido}')
+
+FORMULA PARA IMPRIMIR A DATA DO DIA COM O IMPORT: 
+    from datetime import date as current_day
+    today = current_day.today()
+    print(today)
+

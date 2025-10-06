@@ -1,0 +1,67 @@
+Set: Coleções desordenadas e mutáveis de itens únicos. Automaticamente remove valores repetidos.
+
+usar quando a unicidade dos elementos é a principal preocupação (tirar a repetição de dados);
+Você precisa adicionar ou remover elementos dinamicamente;
+Precisa realizar operações matemáticas de conjunto (união, interseção);
+A verificação rápida de pertinência é vital.
+
+set(): cria um novo conjunto
+
+my_set = {}     >> também cria um novo conjunto, sem informações
+
+SUMÁRIO
+    add()	            	        Adds an element to the set
+    clear()	    	                Removes all the elements from the set
+    copy()	    	                Returns a copy of the set
+    difference()	                (-)	Returns a set containing the difference between two or more sets
+    difference_update()	            (-=) Removes the items in this set that are also included in another, specified set
+    discard()	        	        Remove the specified item
+    intersection()	                (&)	Returns a set, that is the intersection of two other sets
+    intersection_update()	        (&=) Removes the items in this set that are not present in other, specified set(s)
+    isdisjoint()	 	            Returns whether two sets have a intersection or not
+    issubset()	                    (<=) Returns True if all items of this set is present in another set;
+                                    (<) Returns True if all items of this set is present in another, larger set
+    issuperset()	                (>=) Returns True if all items of another set is present in this set;
+                                    (>) Returns True if all items of another, smaller set is present in this set
+    pop()	 	                    Removes an element from the set
+    remove()	 	                Removes the specified element
+    symmetric_difference()	        (^)	Returns a set with the symmetric differences of two sets
+    symmetric_difference_update()	(^=) Inserts the symmetric differences from this set and another
+    union()	                        (|) Return a set containing the union of sets
+    update()	                    (|=) Update the set with the union of this set and others
+
+ADICIONAR OU REMOVER ELEMENTOS
+    my_set.add(1) >> verifica se o elemento já está, se não, o adiciona ao final da lista
+    my_set.remove(1) >> remove o elemento em específico, precisa especificar!
+
+UNIÃO, INTERSEÇÃO E DIFERENÇA
+    A = {1, 2, 3, 4}
+    B = {3, 4, 5, 6}
+
+    # União: elementos em A ou B
+    uniao = A.union(B)
+    print(f"União: {uniao}") 
+        # {1, 2, 3, 4, 5, 6}
+
+    # Interseção: elementos em A e B
+    intersecao = A.intersection(B)
+    print(f"Interseção: {intersecao}") 
+        # {3, 4}
+
+    # Diferença: elementos em A que não estão em B
+    diferenca = A.difference(B)
+    print(f"Diferença: {diferenca}") 
+        # {1, 2}
+
+LIMPAR DUPLICATAS EM LISTA USANDO Set
+    
+        lista_com_duplicatas = ["maçã", "banana", "maçã", "uva", "banana"]
+
+    # Passo 1: Converter a lista para um conjunto para remover duplicatas
+        conjunto_de_frutas_unicas = set(lista_com_duplicatas)
+
+    # Passo 2: Converter o conjunto de volta para uma lista (se necessário)
+        lista_sem_duplicatas = list(conjunto_de_frutas_unicas)
+
+        print(f"Lista original: {lista_com_duplicatas}")
+        print(f"Lista sem duplicatas: {lista_sem_duplicatas}")

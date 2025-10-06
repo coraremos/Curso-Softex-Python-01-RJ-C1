@@ -1,0 +1,113 @@
+LISTA: List is a collection which is ordered and changeable. Allows duplicate members.
+
+SUMARIO
+    append()	Adds an element at the end of the list
+    clear() 	Removes all the elements from the list
+    copy()	    Returns a copy of the list
+    count()	    Returns the number of elements with the specified value
+    extend()	Add the elements of a list (or any iterable), to the end of the current list
+    index()	    Returns the index of the first element with the specified value
+    insert()	Adds an element at the specified position
+    pop()	    Removes the element at the specified position
+    remove()	Removes the item with the specified value
+    reverse()	Reverses the order of the list
+        
+        AINDA NÃO VI:
+        sort()	Sorts the list
+
+thislist = ["apple", "banana", "cherry"]
+    print(thislist) 
+    print(thislist[1]) >> ACESSAR ITENS NA LISTA
+    print(len(thislist)) #>> CUMPRIMENTO DA LISTA
+    print(type(thislist)) #>> TIPO DA LISTA <class 'list'>
+
+ACESSAR TRECHOS DA LISTA
+    thislist = ["apple", "banana", "cherry", "orange", "kiwi", "melon", "mango"]
+    print(thislist[2:5]) -> intervalo com [2, 3, 4]
+    print(thislist[:4]) -> intervalo [0, 1, 2, 3]
+    print(thislist[2:]) -> intervalo de [2, 3... até o último]
+(sempre iniciando no index [0] ou [-1])
+
+#list() construtor pra CRIAR UMA LISTA
+    thislist = list(("apple", "banana", "cherry"))
+    print(thislist)
+
+ALTERAR ITENS/SUBSTITUIR ITENS
+    thislist[1] = "novoitem" >> irá substituir o item no index 1
+    thislist[1:2] = ["novoitem1", "novoitem2"] >> irá substituir o item no index 1 por dois itens, empurrando os demais.
+
+INSERIR ITENS NA LISTA
+    lista.append(item): Coloca o item no fim da lista. 
+    lista.insert(nºposicao, nomedoitem): Coloca o item em uma posição específica. 
+
+REMOVER ITENS DA LISTA
+    lista.remove(item): Apaga o item pelo nome dele. Se tiver mais de um item com o mesmo nome, ele apaga o primeiro que encontrar.
+    lista.pop(posicao): Apaga o item pela posição dele e ainda te devolve o item removido. Se você não disser a posição, ele remove o último item.
+
+DELETANDO LISTAS
+    thislist = ["apple", "banana", "cherry"]
+     APAGANDO UM ITEM
+         del thislist[0]
+     APAGANDO A LISTA COMPLETA
+         del thislist
+
+LIMPANDO LISTAS
+    thislist.clear() >> a lista ainda existe mas com nenhuma informação
+
+ESTENDENDO - pode extender mesclando todos os tipos (lists, tuples, sets, dictionaries etc.)
+    .extend():
+    primeiralista.extend(segundalista) >> extende unindo duas listas diferentes
+
+UNIR/JUNTAR LISTAS
+    .join(): unir os itens da lista em um texto único
+        EX.: " ".join(mylist) >> irá unir os itens da lista com um espaço entre eles
+    
+    juntar listas:
+        list3 = list1 + list2
+
+ARRUMANDO E INVERTENDO A ORDEM
+    Para ordenar:
+        lista.sort(): Organiza a lista. Se for de números, coloca em ordem crescente. Se for de letras, coloca em ordem alfabética.
+        lista.sort(reverse=True): A mesma coisa, mas em ordem decrescente.
+    Para inverter:
+        lista.reverse(): Simplesmente inverte a ordem de todos os itens. O último vira o primeiro.
+
+FILAS:
+    lista.append(): Adicionar um item no final.
+    lista.pop(0): Remover o primeiro item.
+
+------ LOOP DE LISTAS: 
+
+for, range, len
+
+    thislist = ["apple", "banana", "cherry"]
+    for i in range(len(thislist)):
+        print(thislist[i])
+
+WHILE
+
+    thislist = ["apple", "banana", "cherry"]
+    i = 0
+    while i < len(thislist):
+        print(thislist[i])
+        i = i + 1
+
+UMA SINTAXE MAIS CURTA: newlist = ['expression' for 'item' in 'iterable' if 'condition' == True]
+
+    EX.1:
+        thislist = ["apple", "banana", "cherry"]
+        [print(x) for x in thislist]
+
+    EX.2:
+        fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+        newlist = [x for x in fruits if "a" in x]
+        print(newlist)
+
+    EX.3: 
+        newlist = [x for x in range(10) if x < 5]
+        print(newlist) 
+        >> [0, 1, 2, 3, 4]
+
+COPIAR LISTA
+    mylist = thislist.copy() >> copia e cria ao mesmo tempo
+    mylist = thislist[:]  >>copia todas as informações
