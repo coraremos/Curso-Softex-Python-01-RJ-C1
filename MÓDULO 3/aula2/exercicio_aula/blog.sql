@@ -28,3 +28,5 @@ INSERT INTO postagens (titulo,postagem,id_autor) VALUES ('Minha quarta postagem'
 INSERT INTO postagens (titulo,postagem,id_autor) VALUES ('Minha quinta postagem','Efgh ijlm abcd', 5);
 
 SELECT * FROM postagens;
+SELECT titulo, postagem FROM postagens WHERE id_autor = 4;
+SELECT email, primeiro_nome FROM usuarios WHERE id = 4;
