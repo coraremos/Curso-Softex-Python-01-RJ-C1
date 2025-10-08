@@ -1,0 +1,80 @@
+Exercício 1: Relacionamento Um para Muitos (1:N)
+
+Cenário: Uma biblioteca precisa gerenciar livros e autores.
+
+Passo 1: Inserção de Dados
+● Tabela autores:
+○ Atributos: id_autor, nome, nacionalidade.
+○ Pedidos de Inserção:
+■ Insira 2 autores.
+● Tabela livros:
+○ Atributos: id_livro, titulo, ano_publicacao, id_autor (chave estrangeira).
+○ Pedidos de Inserção:
+■ Insira 3 livros, associando-os aos autores que você criou.
+
+Passo 2: Pedidos de Consulta
+1. Consulta sem JOIN: Selecione o título de todos os livros e o ano de publicação.
+2. Consulta com JOIN e filtro: Mostre o título de cada livro e o nome do seu autor.
+3. Consulta com JOIN e filtro WHERE: Mostre os títulos dos livros e os nomes dos
+autores com a nacionalidade 'Britânica'.
+4. Consulta com COUNT: Conte quantos livros cada autor escreveu.
+
+-----------------------
+
+Exercício 2: Relacionamento Muitos para Muitos (N:N)
+
+Cenário: Uma academia precisa gerenciar alunos e as aulas que eles frequentam.
+
+Passo 1: Inserção de Dados
+● Tabela alunos:
+○ Atributos: id_aluno, nome, idade.
+○ Pedidos de Inserção:
+■ Insira 2 alunos.
+● Tabela aulas:
+○ Atributos: id_aula, nome_aula.
+○ Pedidos de Inserção:
+■ Insira 3 aulas.
+● Tabela alunos_aulas (Tabela de Ligação):
+○ Atributos: id_aluno (chave estrangeira), id_aula (chave estrangeira).
+○ Pedidos de Inserção:
+■ Insira 4 relações para mostrar quais alunos fazem quais aulas.
+
+Passo 2: Pedidos de Consulta
+1. Consulta com JOIN: Mostre o nome de cada aluno e os títulos das aulas que ele faz.
+2. Consulta com JOIN e COUNT: Conte quantos alunos cada aula tem.
+3. Consulta com JOIN e filtro IN: Selecione os nomes dos alunos que frequentam as
+aulas com ID 1 ou 3.
+4. Consulta com JOIN e filtro WHERE: Selecione o nome de todos os alunos que fazem a
+aula 'Zumba'.
+
+---------------------------
+
+Exercício 3: Sistema de Avaliações
+
+Cenário: Uma escola quer armazenar as notas dos alunos em diferentes matérias. Cada aluno
+pode ter uma nota para cada matéria, e cada matéria pode ser avaliada por vários alunos.
+
+Passo 1: Inserção de Dados
+● Tabela alunos:
+○ Atributos: id_aluno, nome, idade.
+○ Pedidos de Inserção:
+■ Insira 3 alunos.
+● Tabela materias:
+○ Atributos: id_materia, nome_materia.
+○ Pedidos de Inserção:
+■ Insira 3 matérias (por exemplo: 'Matemática', 'História', 'Ciências').
+● Tabela avaliacoes (Tabela de Ligação):
+○ Atributos: id_aluno (chave estrangeira), id_materia (chave estrangeira), nota.
+○ Pedidos de Inserção:
+■ Insira pelo menos 6 avaliações, dando notas para os alunos nas
+matérias.
+
+Passo 2: Pedidos de Consulta
+1. Consulta com JOIN: Mostre o nome de cada aluno e a nota que ele tirou em cada
+matéria.
+2. Consulta com AVG e JOIN: Calcule a nota média de cada matéria.
+3. Consulta com GROUP BY e JOIN: Mostre a nota média de cada aluno em todas as
+suas matérias.
+4. Consulta com MIN, MAX e JOIN: Mostre a maior e a menor nota geral de cada
+matéria.
+5. Consulta com HAVING: Liste os alunos que têm uma nota média superior a 7
