@@ -1,0 +1,27 @@
+CHAVES PRIMARIAS E ESTRANGEIRAS
+
+PRIMARY KEY - é o RG de cada ficha
+
+FOREIGN KEY - aponta para o RG(primary key) de uma ficha que está em outra gaveta
+
+relações:
+
+1:N (o professor tem muitos alunos, mas os alunos só tem um professor)
+O professor terá seu id primary key, e o aluno vai ter além de uma primary key um INTEGER com o id_professor
+
+N:N (muitos pra muitos - um aluno pode fazer vários cursos, e um curso pode ter vários alunos)
+Haverá a necessidade de uma terceira tabela, chamada tabela de ligação, que junta os IDs de ambas
+
+COUNT()
+função que conta valores
+
+AVG() - calcula a média dos valores numéricos
+MIN() - calcula o menor valor em uma coluna
+MAX() - calcula o maior valor em uma coluna
+
+GROUP BY - agrupa linhas
+
+HAVING - condição (estilo IF porém tendo)
+
+
+
