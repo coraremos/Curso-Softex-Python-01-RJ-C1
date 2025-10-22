@@ -1,5 +1,22 @@
-from user_model import UserModel
 
+""" EXERCÍCIO!
+
+Faça uma atualização NO MENU para acessar o CRUD do blog_model:
+- criar postagem
+- ler todas as postagens
+- ler postagens pelo id
+- ler postagens pelo id_user
+- atualizar postam (pelo id da postagem)
+- deletar postagem (pedo id da postagem)
+
+>>>>>>>>>>>> se basear no main da aula 4: 
+- criar um metodo display_submenu() além de alterar o display_menu()
+- criar handle_user_management() e handle_blog_management()
+- criar handle_enrollment_management() para lidar com as operações N:N
+- criar main para controlar o menu principal e relacionar ele com os demais
+"""
+
+from user_model import UserModel
 
 def display_menu():
     """Exibe o menu de opções."""
