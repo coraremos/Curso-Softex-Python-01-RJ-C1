@@ -1,11 +1,16 @@
 '''
-Dada uma lista, use list comprehension para criar uma nova lista que retém apenas os números, descartando strings, booleanos ou outro
+Dada uma lista, use list comprehension para criar 
+uma nova lista que retém apenas os números, 
+descartando strings, booleanos ou outro
 
-list comprehension, isinstance(), if, print
+Usar list comprehension, isinstance(), if, print
 '''
 
-lista = ['a', 'b', 3, 2]
-lista_numeros = [item for item in lista if isinstance(item, int)]
+def cria_lista_numeros(lista:list):
+    lista_numeros = [item for item in lista if type(item) is int]
 
-print(lista_numeros)
+    return lista_numeros
+
+lista_mesclada = ['a', False, 'b', 3, 2]
+print(cria_lista_numeros(lista_mesclada))
 

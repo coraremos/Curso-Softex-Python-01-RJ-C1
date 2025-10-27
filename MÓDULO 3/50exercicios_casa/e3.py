@@ -6,11 +6,11 @@ Atenção: Mudar o tamanho da lista durante a iteração requer cuidado
 Ferramentas sugeridas: while, list.pop()/list.remove(), str.lower(), if, print'''
 
 def editar_lista(lista:list):
-
-    for n in lista:
-        
-        if 'a' in n:
-            lista.remove(n)
+    n = len(lista) - 1
+    while n >=0:    
+        if 'a' in lista[n].lower():
+            lista.pop(n)
+        n-=1
     return lista
 
 lista = ['a', 'b', 'A', 'c']
