@@ -1,4 +1,5 @@
 from e3 import editar_lista
+import pytest
 
 def test_editar_lista():
     lista = ['a', 'b', 'A', 'c']
