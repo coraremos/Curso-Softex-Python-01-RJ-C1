@@ -20,10 +20,9 @@ def lista_de_numeros_aleatorios():
 print(lista_de_numeros_aleatorios())'''
 
 #FORMA FINAL RESUMIDA
+import random 
 
-def lista_de_numeros_aleatorios():
-
-    import random 
+def lista_de_numeros_aleatorios(L1:list[int], L2:list[int]) -> list[int]:
 
     #criar lista 1 e lista 2, de 5 números aleatórios, dentro dos números de 1 a 10
     L1 = random.sample( range(1, 11) , 5)
