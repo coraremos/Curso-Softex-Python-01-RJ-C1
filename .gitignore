@@ -2,3 +2,4 @@ __pycache__
 
 meu banco.db
 .venv
+db.sqlite3
