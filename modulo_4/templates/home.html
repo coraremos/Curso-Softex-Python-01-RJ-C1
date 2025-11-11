@@ -24,6 +24,17 @@
     {% endif %} 
 
 
+    <hr>     
+    <h3>Nova Tarefa:</h3>    
+
+    <form method="POST">         
+        {% csrf_token %}   
+
+        {{ form.as_p }}    
+
+        <button type="submit">Adicionar Tarefa</button>     
+    </form>     
+    <hr>
 
     <hr> <h2>Minha Lista de Tarefas (do Banco de Dados):</h2>      
     <ul>         
