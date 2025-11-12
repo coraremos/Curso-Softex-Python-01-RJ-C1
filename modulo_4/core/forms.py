@@ -13,6 +13,7 @@ class TarefaForm(forms.ModelForm):
         # 2. Diga quais campos do Model devem virar campos no form         
         # Nós só queremos que o usuário defina o 'titulo'.      
         fields = ['titulo']   
+        # titulo é um objeto da models.py
         # 'concluida' (default=False) e 'criada_em' (auto_now_add=True)         
         # serão preenchidos automaticamente pelo Model. 
         
