@@ -13,10 +13,14 @@
 ## python manage.py runserver
 ## http://127.0.0.1:8000
 
+
+
 # ~ Models ~ 
 # criar o modelo em core/models.py
 # python manage.py makemigrations core   <- para criar o arquivo
 # python manage.py migrate   <- para migrar as informações p/ o django e criar o doc db.sqlite3
+
+
 
 # ~ ADMIN ~
 # python manage.py createsuperuser   <- cria um superusuario
