@@ -1,0 +1,34 @@
+# ~ ativar o ambiente virtual ~
+
+## py -m venv .venv
+## .venv\Scripts\activate
+# pip freeze ou pip list   <- para verificar se o Django e outras aplicações já estão instaladas
+## pip install -r .\requirements.txt    <- para instalar se não estiverem iguais
+
+
+
+# ~ ativar o projeto ~
+
+## cd modulo_4
+## python manage.py runserver
+## http://127.0.0.1:8000
+
+
+
+# ~ Models ~ 
+# criar o modelo em core/models.py
+# python manage.py makemigrations   <- para criar o arquivo
+# python manage.py migrate   <- para migrar as informações p/ o django e criar o doc db.sqlite3
+
+
+
+# ~ ADMIN ~
+# python manage.py createsuperuser   <- cria um superusuario
+# editar o core/admin.py
+# editar o core/views.py para os dados serem enviados ao template
+# editar templates/home.html para a exibicao dos dados no template
+
+
+obs
+
+BANCO DE DADOS RELACIONAL - os dados se relacionam
