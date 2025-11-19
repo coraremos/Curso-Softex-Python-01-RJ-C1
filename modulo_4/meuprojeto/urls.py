@@ -16,10 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     
     #Qualquer URL que chegar no site (representada pelo '') deve ser redirecionada para o arquivo core/urls.py para ser processada.
-    path('',include('core.urls')),
+    path('',include('core.urls')),  # Nossas URLs do app 'core' 
+
+    # URL de Login 
+    # Ela usa a View pronta 'LoginView' e diz a ela para usar nosso template 
+    path('login/', 
+         auth_views.LoginView.as_view(template_name='login.html'), 
+         name='login'),
+
+    # URL de Logout 
+    # Ela usa a View 'LogoutView'. 'next_page' diz para onde ir após o logout. 
+    path('logout/', 
+         auth_views.LogoutView.as_view(next_page='login'),
+         name='logout'),
 ]
