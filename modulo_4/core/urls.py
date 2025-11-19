@@ -16,4 +16,3 @@ urlpatterns = [
 #   <int:pk>: Esta é a sintaxe do Django para capturar partes de uma URL.  
 #             int significa queele espera um número inteiro, 
 #             e pk é o nome da variável que será passada para a nossa view. 
-
