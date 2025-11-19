@@ -32,3 +32,8 @@
 obs
 
 BANCO DE DADOS RELACIONAL - os dados se relacionam
+
+no git do prof.
+bot-django/apps/accounts/views.py <- arquivo base para criação de admin
+bot-django/templates/accounts <- arquivos com modelos html
+
