@@ -28,6 +28,10 @@
 # editar o core/views.py para os dados serem enviados ao template
 # editar templates/home.html para a exibicao dos dados no template
 
+adicionar novo app
+# py manage.py startapp projects
+-> manage.py startapp nomedanovapasta
+-> ir em meuprojeto/settings.py incluir em INSTALLED_APPS mais uma linha
 
 obs
 
