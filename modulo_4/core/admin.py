@@ -4,10 +4,10 @@ from .models import Tarefa  # 1. Importe seu Model
 
 # 1. Crie uma classe que herda de admin.ModelAdmin
 class TarefaAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'user', 'get_user_email', 'concluida', 'criada_em')
-    list_filter = ('concluida', 'user', 'criada_em') 
+    list_display = ('titulo', 'user', 'get_user_email', 'concluida', 'criada_em', 'project')
+    list_filter = ('concluida', 'user', 'criada_em', 'project') 
     #para pesquisar o titulo é interessante inserir campo de busca nos titulos e não display tudo em lista
-    search_fields = ('titulo', 'user__username')
+    search_fields = ('titulo', 'user__username', 'project')
     #campo de busca q procura em titulos e user name.
 
     fieldsets = (        

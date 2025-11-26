@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from projects.models import Project
 
 # Cada classe aqui é "traduzida" para uma tabela no banco de dados 
 class Tarefa(models.Model):     
@@ -16,6 +17,10 @@ class Tarefa(models.Model):
     # 'on_delete=models.CASCADE' diz ao banco: 
     # "Se o usuário for deletado, delete todas as tarefas dele também."
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    # Cada Tarefa agora DEVE estar ligada a um Projeto.     
+    # 'related_name' é uma boa prática para consultas inversas.
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tarefas')
 
     # Este é um "método mágico" do Python.     
     # Ele diz ao Django como "chamar" um objeto Tarefa.     

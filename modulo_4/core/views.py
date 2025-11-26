@@ -13,7 +13,7 @@ def home(request):
     # 3. Lógica de POST: Se o formulário foi enviado     
     if request.method == 'POST':         
      # Cria uma instância do form e preenche com os dados do POST
-        form = TarefaForm(request.POST)
+        form = TarefaForm(request.POST, user=request.user)
     
         # 4. O Django valida os dados (max_length, etc.)         
         if form.is_valid():    
@@ -29,13 +29,12 @@ def home(request):
             # 6. Redireciona de volta para a 'home'             
             # Isso é o Padrão "Post-Redirect-Get" (PRG)             
             return redirect('home')
+    else:         # 2. Passe o 'user' logado para o formulário no GET         
+        form = TarefaForm(user=request.user)
 
          # Se o form NÃO for válido, o código continua e          
-         # o 'form' (com os erros) será enviado para o template
-   
-    # 7. Lógica de GET: Se o usuário apenas visitou a página     
-    else:         
-        form = TarefaForm()  # Cria um formulário vazio
+         # o 'form' (com os erros) será enviado para o template 
+    
     # 2. Use o ORM para buscar os dados!     
     # Tarefa.objects.all() significa: "Pegue todas as linhas da tabela Tarefa"    
     # 8. A busca de dados (fora dos 'ifs', pois é necessária sempre)
@@ -46,7 +45,6 @@ def home(request):
     # return HttpResponse("<h1>Olá, Mundo! Esta é a primeira página Django da Corar!</h1>")
     context = {
         'nome_usuario': request.user.username, # Use o nome do usuário logado! 
-        'tecnologias': ['Autenticação', 'ForeignKey', 'Login'],
         'tarefas': todas_as_tarefas,  # 4. Adicione as tarefas ao contexto
         'form': form,
     }
