@@ -13,16 +13,25 @@
 class Motor:
     def __init__(self):
         pass
-    def ligar(self):
+    def ligar_motor(self):
         print("Motor ligou!")
+    def desligar_motor(self):
+        print("Motor desligou.")
 
 class Carro:
     def __init__(self):
+        #aqui está a composição, o carro "tem um" motor:
         self.motor = Motor() #chama a composição acima, não precisa descrever igual herança no self
 
-    def ligar(self):
+    def ligar_carro(self):
         print("O carro está ligando..")
-        self.motor.ligar()
+        self.ligar_motor.ligar_carro()
+    
+    def desligar_carro(self):
+        print("O carro está desligando..")
+        self.desligar_motor.desligar_carro()
 
 meu_carro = Carro("Fusca")
 meu_motor = Motor("rajadao")
+
+meu_carro.ligar_carro()
