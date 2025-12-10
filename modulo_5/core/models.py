@@ -31,7 +31,12 @@ class Tarefa(models.Model):
     prazo = models.DateField(null=True, blank=True, verbose_name='Prazo de Conclusão')
 
     deletada = models.BooleanField(default=False, verbose_name='Deletada')
-
+    
+    concluida_em = models.DateTimeField(
+        null=True, 
+        blank=True,
+        verbose_name='Concluída em'
+        )
     class Meta:
         verbose_name = 'Tarefa'
         verbose_name_plural = 'Tarefas'

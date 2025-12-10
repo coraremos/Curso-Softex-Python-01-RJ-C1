@@ -73,3 +73,74 @@ class TarefaDeleteAPIView(APIView):
             {"message": "Tarefa deletada com sucesso."}, 
             status=status.HTTP_200_OK
         )
+        
+class DetalheTarefaAPIView(APIView):     
+    def get_object(self, pk):
+        return get_object_or_404(Tarefa, pk=pk)
+    
+    def get(self, request, pk, format=None):
+        # 1. BUSCAR: Usa método auxiliar (trata 404)         
+        tarefa = self.get_object(pk)          
+        # 2. SERIALIZAR: Converte objeto único (sem many=True)         
+        serializer = TarefaSerializer(tarefa)          
+        # 3. RESPONDER: Retorna JSON com status 200         
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk, format=None):         
+        tarefa = self.get_object(pk)          
+        serializer = TarefaSerializer(tarefa, data=request.data)         
+           
+        if serializer.is_valid():            
+            serializer.save()              
+            return Response(serializer.data, status=status.HTTP_200_OK)          # ERRO: Retornar erros de validação         
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk, format=None):         
+        """         Atualiza tarefa parcialmente (merge).          
+        Permite enviar apenas os campos que serão modificados.         
+        """         
+        # 1. BUSCAR: Obter o objeto existente         
+        tarefa = self.get_object(pk)          
+        # 2. SERIALIZAR: Passar objeto, novos dados E partial=True         
+        serializer = TarefaSerializer(             
+            tarefa,             
+            data=request.data,             
+            partial=True # <--- ESSENCIAL PARA O PATCH         
+            )          
+        # 3. VALIDAR         
+        if serializer.is_valid():             
+            # 4. SALVAR (aplica apenas os campos recebidos)             
+            serializer.save()              
+            # 5. RESPONDER             
+            return Response(serializer.data, status=status.HTTP_200_OK)          
+        # ERRO         
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):         
+        """Remove um recurso específico."""         
+        # 1. BUSCAR: Obter o objeto (trata 404 se não existir)         
+        tarefa = self.get_object(pk)          
+        # 2. DELETAR         
+        tarefa.delete()          
+        # 3. RESPONDER: 204 No Content (sucesso sem corpo de resposta)         
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def concluida_em(self, request, pk, format=None):
+        tarefa = get_object_or_404(Tarefa, pk=pk)
+        serializer = TarefaSerializer(             
+            tarefa,             
+            data=request.data,             
+            partial=True # <--- ESSENCIAL PARA O PATCH         
+            )
+        if tarefa.concluida_em:
+            tarefa.save()
+            
+            return Response(
+                {"message": "A tarefa foi concluída em: {data}."}, 
+                status=status.HTTP_200_OK
+            )
+    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    

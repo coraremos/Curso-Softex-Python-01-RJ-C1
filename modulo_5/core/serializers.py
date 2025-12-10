@@ -42,3 +42,13 @@ class TarefaSerializer(serializers.ModelSerializer):
             })
         
         return data
+    
+    def validate_concluida(self, data):
+        concluida = data.get('concluida', False)
+        
+        if not concluida:
+            raise serializers.ValidationError({
+                "concluída": "Essa tarefa ainda não tem data de conclusão pois não foi finalizada."
+            })
+
+        return None

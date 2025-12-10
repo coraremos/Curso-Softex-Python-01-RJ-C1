@@ -6,7 +6,6 @@
 ## pip install -r .\requirements.txt    <- para instalar se não estiverem iguais
 
 
-
 # ~ ativar o projeto ~
 
 ## cd modulo_4
@@ -18,7 +17,7 @@
 # ~ Models ~ 
 # criar o modelo em core/models.py
 # python manage.py makemigrations   <- para criar o arquivo
-# python manage.py migrate   <- para migrar as informações p/ o django e criar o doc db.sqlite3
+# ppython manage.py makemigrations   <- para migrar as informações p/ o django e criar o doc db.sqlite3
 
 
 
