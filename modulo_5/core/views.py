@@ -4,7 +4,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from .models import Tarefa 
 from .serializers import TarefaSerializer 
- 
+from datetime import datetime
+
 class ListaTarefasAPIView(APIView): 
     """
     View para operações de coleção (GET e POST).
@@ -143,4 +144,41 @@ class DetalheTarefaAPIView(APIView):
     
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class DuplicarTarefaAPIView(APIView):
     
+    def post(self, request, pk, format=None):
+        tarefa_original = get_object_or_404(Tarefa, pk=pk)
+        
+        nova_tarefa = Tarefa(
+            user=tarefa_original.user,
+            titulo=f"Cópia de {tarefa_original.titulo}", 
+            concluida=False, 
+            prioridade=tarefa_original.prioridade,
+            prazo=tarefa_original.prazo,
+            deletada=False,
+            concluida_em=None
+        )
+        
+        nova_tarefa.save()
+        
+        serializer = TarefaSerializer(nova_tarefa)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class ConcluirTodasTarefasAPIView(APIView):
+    def patch(self, request, format=None):
+        tarefas_pendentes = Tarefa.objects.filter(concluida=False, deletada=False)
+
+        now = datetime.now()
+        
+        quantidade_atualizada = tarefas_pendentes.update(
+            concluida=True,
+            concluida_em=now
+        )
+        
+        return Response(
+            {
+                "message": f"{quantidade_atualizada} tarefas foram marcadas como concluídas.", 
+                "concluidas": quantidade_atualizada
+            }, 
+            status=status.HTTP_200_OK
+        )
