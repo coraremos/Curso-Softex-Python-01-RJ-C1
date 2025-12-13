@@ -1,6 +1,6 @@
 from rest_framework import serializers 
 from .models import Tarefa 
-from datetime import date
+from datetime import date, datetime
  
 class TarefaSerializer(serializers.ModelSerializer): 
     """ 
@@ -14,8 +14,8 @@ class TarefaSerializer(serializers.ModelSerializer):
      
     class Meta: 
         model = Tarefa
-        fields = ['id', 'titulo', 'concluida', 'prioridade', 'prazo', 'deletada', 'criada_em']
-        read_only_fields = ['id', 'criada_em', 'deletada']
+        fields = ['id', 'titulo', 'concluida', 'prioridade', 'prazo', 'deletada', 'criada_em', 'concluida_em']
+        read_only_fields = ['id', 'criada_em', 'deletada', 'concluida_em']
         
     
     def validate_titulo(self, value):
@@ -41,14 +41,28 @@ class TarefaSerializer(serializers.ModelSerializer):
                 "prazo": "O prazo é obrigatório para tarefas pendentes (não concluídas)."
             })
         
-        return data
-    
-    def validate_concluida(self, data):
-        concluida = data.get('concluida', False)
+        request = self.context.get('request')
+        instance = self.instance
         
-        if not concluida:
-            raise serializers.ValidationError({
-                "concluída": "Essa tarefa ainda não tem data de conclusão pois não foi finalizada."
-            })
+        if instance and request and 'concluida' in data:
+            if request.method == 'PATCH':
+                if instance.prioridade == 'alta' and data['concluida'] is True:
+                    raise serializers.ValidationError({
+                        "concluida": "Tarefas de prioridade 'alta' só podem ser concluídas via PUT para garantir a revisão completa dos campos."
+                    })
+        
+        return data
 
-        return None
+
+    def update(self, instance, validated_data):
+
+        if 'concluida' in validated_data:
+            nova_concluida = validated_data['concluida']
+            
+            if nova_concluida and not instance.concluida:
+                validated_data['concluida_em'] = datetime.now()
+                
+            elif not nova_concluida and instance.concluida:
+                validated_data['concluida_em'] = None
+
+        return super().update(instance, validated_data)
