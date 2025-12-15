@@ -1,42 +1,116 @@
-# ~ ativar o ambiente virtual ~
+ativar o ambiente virtual: 
+    py -m venv .venv
+    .venv\Scripts\activate
 
-## py -m venv .venv
-## .venv\Scripts\activate
-# pip freeze ou pip list   <- para verificar se o Django e outras aplicações já estão instaladas
-## pip install -r .\requirements.txt    <- para instalar se não estiverem iguais
+instalar biblioteca:
+    1ª vez: pip install <...>
+        pip install pytest pytest-cov
+        pip install pytest pytest-mock
+        pip install django
+        pip install django djangorestframework django-environ djangorestframework-simplejwt
+    criar doc de referência:
+        pip freeze > requirements.txt
+    depois:
+        pip install -r .\requirements.txt
+
+~ pytest: plugin para medir a porcentagem do cód q foi testado, mostrando um relatorio de cobertura indicando linhas testadas e linhas faltando
+    pytest --cov=funcoes -v
+
+criando projeto:
+    django-admin startproject my_project .
+        (será criada uma pasta com o nome "my_project") 
+
+rodando o servidor (ativando o projeto):
+    python manage.py runserver
+    ## http://127.0.0.1:8000
+
+verificar se o venv está ativo e na mesma pasta que o manage.py:
+    python manage.py startapp <nomedoapp>
+        (será startado o primeiro "app" e criada a pasta 'nomedoapp')
+
+acessar a pasta:
+    cd <nome_do_projeto>
+voltar uma pasta:
+    cd .. 
+
+----------------------------
+
+configurar o django para templates: (VER APOSTILA 2)
+
+    1. criar a pasta templates na raiz do projeto
+    2. editar a linha TEMPLATES -> 'DIRS' (de diretórios) do settings (do projeto) colocando: 
+        'DIRS': [BASE_DIR/'templates'],
+    3. criar o arquivo .html
+    4. renderizar no views do app -> criar no view do core uma def com o nome da página (ex.: home) pra retornar uma render
+    5. incluir a configuração no urls do app -> criar arquivo urls.py com um mapa
+    6. incluir o mapa do app no urls do projeto -> chamar o urls do app no urls do projeto (importanto include)
+
+    7. passar context para o template (editar o views do app e depois o html)
+        
+        O Django usa uma sintaxe especial chamada Django Template Language (DTL). 
+        ●  {{ variavel }}: Usado para exibir uma variável. 
+        ●  {% tag %}: Usado para executar lógica (como if ou for).
+        ●  {% block ... %} define "buracos" que as páginas "filhas" podem preencher. 
+
+    8. adicionar CSS
+
+        criar a pasta static
+        adicionar/colar abaixo da linha STATIC_URL = 'static/' a informação:
+            STATICFILES_DIRS = [BASE_DIR / 'static']
+        dentro da pasta 'static' criar pasta 'css' e, dentro, o arquivo 'style.css'
+        adicionar a estilização q vc quiser nele
+        no arquivo 'base.html' colocar no topo:
+            {% load static %}
+        e no <head> após o tílulo, colocar:
+            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        no topo de 'home.html' colocar:
+            {% extends 'base.html' %}
+
+----------------------------
+
+configurar MODELS do core (BANCO DE DADOS)
+
+1. criar o modelo em core/models.py
+2. realizar a migração:
+    python manage.py makemigrations 
+        (para criar o arquivo)
+    python manage.py migrate 
+        (para migrar as informações p/ o django e criar o doc db.sqlite3)
+
+----------------------------
+
+crie seu super admin:
+
+1. rode o comando:
+    python manage.py createsuperuser
+2. editar o admin.py do app (core) <- ADICIONAR A PÁGINA DE LOGIN DO SUPER ADMIN
+    from .models import <o nome da tabela criada>
+    admin.site.register(<o nome da tabela criada>)
+3. editar o views.py do app para os dados serem enviados ao template
+4. editar o .html da aba para a exibicao dos dados
+
+----------------------------
+
+criar Formulários (Forms) e o Padrão "Post-Redirect-Get" - O "C" do CRUD (Create)
+    (VER A APOSTILA 4)
+
+criar URLS dinâmicas: 
+    (VER A APOSTILA 5)
+
+editar a página de LOGIN:
+    (VER A APOSTILA 6)
 
 
-# ~ ativar o projeto ~
+---------------------------
 
-## cd modulo_4
-## python manage.py runserver
-## http://127.0.0.1:8000
-
+Como gerar uma SECRET_KEY segura: (executar no terminal)
+    python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
 
 
-# ~ Models ~ 
-# criar o modelo em core/models.py
-# python manage.py makemigrations   <- para criar o arquivo
-# ppython manage.py makemigrations   <- para migrar as informações p/ o django e criar o doc db.sqlite3
+----------obs
 
+    BANCO DE DADOS RELACIONAL - os dados se relacionam
 
-
-# ~ ADMIN ~
-# python manage.py createsuperuser   <- cria um superusuario
-# editar o core/admin.py
-# editar o core/views.py para os dados serem enviados ao template
-# editar templates/home.html para a exibicao dos dados no template
-
-adicionar novo app
-# py manage.py startapp projects
--> manage.py startapp nomedanovapasta
--> ir em meuprojeto/settings.py incluir em INSTALLED_APPS mais uma linha
-
-obs
-
-BANCO DE DADOS RELACIONAL - os dados se relacionam
-
-no git do prof.
-bot-django/apps/accounts/views.py <- arquivo base para criação de admin
-bot-django/templates/accounts <- arquivos com modelos html
-
+    no git do prof.:
+    bot-django/apps/accounts/views.py <- arquivo base para criação de admin
+    bot-django/templates/accounts <- arquivos com modelos html
