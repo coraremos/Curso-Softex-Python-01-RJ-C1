@@ -1,6 +1,7 @@
 import os 
 import environ
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,10 +36,41 @@ INSTALLED_APPS = [
     # Third party 
     'rest_framework', 
     'rest_framework_simplejwt', 
+    'rest_framework_simplejwt.token_blacklist',
      
     # Local apps 
     'core',
 ]
+
+# Configuração do Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_ATUTHENTICATION_CLASSES': (
+        # Define JWT como método de autenticação PADRÃO
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_THROTTLE_CLASSES': [         
+        'rest_framework.throttling.AnonRateThrottle',         
+        'rest_framework.throttling.UserRateThrottle'     
+    ],     
+    
+    'DEFAULT_THROTTLE_RATES': {         
+        'anon': '100/day',  # 100 requisições por dia para anônimos (ex: /token/)
+        'user': '3000/day'  # 3000 requisições por dia para autenticados (ex: /tarefas/)     
+    }
+}
+
+SIMPLE_JWT = {
+    'ACESS_TOKEN_LIFETIME': timedelta(minutes=15), #tempo de vida do token Access
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7), #tempo de vida do token Refresh
+
+    'ROTATE_REFRESH_TOKENS': True,      
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'AUTH_HEADER_TYPES': ('Bearer',), #será o esquema de autenticação no header HTTP
+    'ALGORITHM':'HS256', #algoritmo de criptografia
+    'USER_ID_CLAIM':'user_id', #nome do campo de usuário no PayLoad
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
