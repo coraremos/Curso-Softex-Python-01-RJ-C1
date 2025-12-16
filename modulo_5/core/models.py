@@ -9,11 +9,10 @@ class Tarefa(models.Model):
         ('alta', 'Alta'),
     ]
     
+    # ↓ OBRIGATÓRIO: Sem null=True e sem blank=True
     user = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
-        null=True, 
-        blank=True, 
         related_name='tarefas',
         verbose_name='Usuário'
     )
