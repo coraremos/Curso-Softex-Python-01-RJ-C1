@@ -1,10 +1,20 @@
 from rest_framework.views import APIView 
 from rest_framework.response import Response 
-from rest_framework import status 
+from rest_framework import status, generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from django.shortcuts import get_object_or_404
+from django.db.models import Count, Q
+
 from .models import Tarefa 
+
 from .serializers import TarefaSerializer 
 from datetime import datetime
+
+from rest_framework_simplejwt.views import TokenObtainPairView 
+from .serializers import CustomTokenObtainPairSerializer
+
 
 class ListaTarefasAPIView(APIView): 
     """
@@ -43,7 +53,6 @@ class ListaTarefasAPIView(APIView):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    
 class ContagemTarefasAPIView(APIView): 
     def get(self, request): 
         tarefas_ativas = Tarefa.objects.filter(deletada=False)
@@ -182,3 +191,135 @@ class ConcluirTodasTarefasAPIView(APIView):
             }, 
             status=status.HTTP_200_OK
         )
+    
+class MinhaView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        print(f"Usuário autenticado: {request.user.username}")
+
+class TarefaListCreateAPIView(generics.ListCreateAPIView):
+    """
+    Lista tarefas e permite a criação de novas tarefas.
+
+    PROTEGIDA: Requer autenticação JWT.
+    """
+    queryset = Tarefa.objects.all()
+    serializer_class = TarefaSerializer
+    permission_classes = [IsAuthenticated] # ← Proteção
+
+    def perform_create(self,serializer):
+        serializer.save(user=self.request.user)
+
+class TarefaRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Detalhes de tarefa, atualização e exclusão.
+
+    PROTEGIDA: Requer autenticação JWT.
+    """
+
+    queryset = Tarefa.objects.all()
+    serializer_class = TarefaSerializer
+    permission_classes = [IsAuthenticated]
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    """View que usa o serializer customizado."""     
+    serializer_class = CustomTokenObtainPairSerializer
+
+class LogoutView(APIView):     
+    permission_classes = [IsAuthenticated]          
+    def post(self, request):         
+        try:             
+            refresh_token = request.data.get("refresh")             
+            token = RefreshToken(refresh_token)             
+            token.blacklist()  # Adiciona o token à lista negra                          
+            return Response(                 
+                {"detail": "Logout realizado com sucesso."},                 
+                status=status.HTTP_205_RESET_CONTENT # 205 é a resposta padrão para "reset content"             
+            )         
+        except Exception: # Captura exceções como token_not_valid             
+            return Response(                 
+                {"detail": "Token inválido."},                 
+                status=status.HTTP_400_BAD_REQUEST             
+            )
+
+
+#EXERCICIOS
+
+class MeView(APIView): 
+    """ Retorna dados do usuário autenticado 
+
+    endpoint: /api/me/
+    """
+    permission_classes = [IsAuthenticated] 
+     
+    def get(self, request): 
+        user = request.user 
+        return Response({ 
+            'id': user.id, 
+            'username': user.username, 
+            'email': user.email, 
+            'is_staff': user.is_staff, 
+            'date_joined': user.date_joined 
+        })
+
+# -> Crie endpoint /api/change-password/ protegido:
+class ChangePasswordView(APIView): 
+    permission_classes = [IsAuthenticated] 
+     
+    def post(self, request): 
+        user = request.user 
+        old_password = request.data.get('old_password') 
+        new_password = request.data.get('new_password') 
+         
+        if not user.check_password(old_password): 
+            return Response( 
+                {'error': 'Senha atual incorreta'}, 
+                status=400 
+            ) 
+         
+        user.set_password(new_password) 
+        user.save() 
+         
+        return Response({'detail': 'Senha alterada com sucesso'})
+
+# -> Crie endpoint /api/stats/ que retorna: 
+""" 
+
+{ 
+  "total_tarefas": 10, 
+  "concluidas": 6, 
+  "pendentes": 4, 
+  "taxa_conclusao": 0.6 
+}
+
+"""
+
+class StatsView(APIView):
+    """
+    Endpoint /api/stats/ que retorna estatísticas do usuário autenticado:
+    total_tarefas, concluidas, pendentes e taxa_conclusao.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        
+        # Filtra tarefas do usuário logado que não foram marcadas como deletadas
+        tarefas_do_usuario = Tarefa.objects.filter(user=user, deletada=False)
+
+        # Contagem de tarefas
+        total_tarefas = tarefas_do_usuario.count()
+        concluidas = tarefas_do_usuario.filter(concluida=True).count()
+        pendentes = total_tarefas - concluidas
+
+        # Cálculo da taxa de conclusão (tratando divisão por zero)
+        taxa_conclusao = concluidas / total_tarefas if total_tarefas > 0 else 0.0
+        
+        return Response({
+            "total_tarefas": total_tarefas,
+            "concluidas": concluidas,
+            "pendentes": pendentes,
+            # Arredonda a taxa para 2 casas decimais, conforme o exemplo
+            "taxa_conclusao": round(taxa_conclusao, 2) 
+        })
