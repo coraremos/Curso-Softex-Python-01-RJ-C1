@@ -1,6 +1,7 @@
 from rest_framework import serializers 
 from .models import Tarefa 
 from datetime import date, datetime
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
  
 class TarefaSerializer(serializers.ModelSerializer): 
     """ 
@@ -11,11 +12,30 @@ class TarefaSerializer(serializers.ModelSerializer):
     2. Converter JSON → Tarefa (desserialização) 
     3. Validar dados de entrada 
     """ 
-     
+
+    # Mostra o username do usuário em vez do ID (read-only na saída)
+    user = serializers.StringRelatedField(read_only=True)
+
     class Meta: 
         model = Tarefa
-        fields = ['id', 'titulo', 'concluida', 'prioridade', 'prazo', 'deletada', 'criada_em', 'concluida_em']
-        read_only_fields = ['id', 'criada_em', 'deletada', 'concluida_em']
+        fields = [
+            'id', 
+            'user',
+            'titulo', 
+            'concluida', 
+            'prioridade', 
+            'prazo', 
+            'deletada', 
+            'criada_em', 
+            'concluida_em'
+        ]
+        read_only_fields = [
+            'id', 
+            'user',
+            'criada_em', 
+            'deletada', 
+            'concluida_em'
+        ]
         
     
     def validate_titulo(self, value):
@@ -66,3 +86,15 @@ class TarefaSerializer(serializers.ModelSerializer):
                 validated_data['concluida_em'] = None
 
         return super().update(instance, validated_data)
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer): 
+    @classmethod     
+    def get_token(cls, user):         
+        token = super().get_token(user)
+
+        # Adicionar campos customizados ao payload         
+        token['username'] = user.username         
+        token['email'] = user.email         
+        token['is_staff'] = user.is_staff     
+
+        return token
