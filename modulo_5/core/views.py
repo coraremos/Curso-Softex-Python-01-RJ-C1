@@ -1,22 +1,25 @@
+from datetime import datetime
+
+from rest_framework import status, generics
 from rest_framework.views import APIView 
 from rest_framework.response import Response 
-from rest_framework import status, generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny, DjangoModelPermissions
+
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import TokenObtainPairView 
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
 from .models import Tarefa 
+from .permissions import IsGerente, CanDeleteTask
 
-from .serializers import TarefaSerializer 
-from .serializers import UserRegistrationSerializer
-from datetime import datetime
+from .serializers import (
+    TarefaSerializer, 
+    CustomTokenObtainPairSerializer, 
+    UserRegistrationSerializer,
+)
 
-from rest_framework_simplejwt.views import TokenObtainPairView 
-from .serializers import CustomTokenObtainPairSerializer
-from .permissions import IsGerente
 
 class ListaTarefasAPIView(APIView): 
     """
@@ -207,18 +210,20 @@ class TarefaListCreateAPIView(generics.ListCreateAPIView):
     PROTEGIDA: Requer autenticação JWT.
     """
     serializer_class = TarefaSerializer
-    permission_classes = [IsAuthenticated] # ← Proteção
+    permission_classes = [IsAuthenticated, DjangoModelPermissions] # ← Proteção
 
     def get_queryset(self):         
         """         
         Sobrescreve o comportamento padrão para retornar APENAS         
-        os dados pertencentes ao usuário logado.         
-        """         
-        # 1. Recupera o usuário validado pelo JWT         
-        user = self.request.user         
+        os dados pertencentes ao usuário logado.      
 
-        # 2. Retorna o filtro. O Django fará o WHERE user_id = X no banco.         
-        return Tarefa.objects.filter(user=user)     
+        Fluxo:
+        1. JWT decodifica o token → request.user (Objeto User)        
+        2. ORM filtra: WHERE user_id = request.user.id        
+        3. Retorna QuerySet filtrado        
+        """              
+        # Retorna o filtro. O Django fará o WHERE user_id = X no banco.         
+        return Tarefa.objects.filter(user=self.request.user)     
      
     def perform_create(self, serializer):         
         # Garante que a tarefa criada seja vinculada ao usuário logado         
@@ -226,33 +231,58 @@ class TarefaListCreateAPIView(generics.ListCreateAPIView):
 
 class TarefaRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
-    Detalhes de tarefa, atualização e exclusão.
-
-    PROTEGIDA: Requer autenticação JWT.
+    View de detalhe com RBAC implementado.
+    
+    Regras: 
+    - GET, PUT, PATCH: Qualquer usuário autenticado (desde que seja dono)
+    - DELETE: Apenas usuários do grupo 'Gerente'
     """
 
     serializer_class = TarefaSerializer
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):         
         """         
-        Garante que operações de detalhe (GET, PUT, DELETE por ID)         
-        só encontrem o objeto se ele pertencer ao usuário.         
+                 
+        Filtra queryset para APENAS tarefas do usuário logado:
+            Garante que operações de detalhe (GET, PUT, DELETE por ID)         
+            só encontrem o objeto se ele pertencer ao usuário.
+
+        Segurança:
+        - GET /api/tarefas/999/ (tarefa de outro usuário) → 404        
+        - DELETE /api/tarefas/999/ → 404
+        - PUT /api/tarefas/999/ → 404
+
+        Por que 404 e não 403?        
+            403 Forbidden revela que o recurso existe.
+            404 Not Found oculta a existência do dado.
         """                
         return Tarefa.objects.filter(user=self.request.user)
     
-    def get_permissions(self):         
+    def get_permissions(self):     
+        """ Versão alternativa usando permissão de negócio. """
+        return [IsAuthenticated(), CanDeleteTask()]
+
         """         
         Instancia e retorna a lista de permissões que esta view requer,         
         dependendo do método HTTP da requisição.         
+
+        Fluxo de verificação: 
+        1. Método é DELETE? → Exige IsAuthenticated + IsGerente
+        2. Outros métodos? → Apenas IsAuthenticated
+
+        Ordem importa: 
+        - Is Authenticated SEMPRE primeiro (garante login).
+        - Permissões específicas depois.
         """         
-        if self.request.method == 'DELETE':             
+        #if self.request.method == 'DELETE':             
             # Para deletar: Precisa estar logado E ser Gerente             
             # A ordem importa: primeiro checa login, depois o grupo             
-            return [IsAuthenticated(), IsGerente()]     
+            #return [IsAuthenticated(), IsGerente()]     
                      
         # Para GET, PUT, PATCH: Basta estar logado (e ser dono, garantido pelo queryset)        
-        return [IsAuthenticated()]
+        #return [IsAuthenticated()]
+    
+        
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     """View que usa o serializer customizado."""     
@@ -283,14 +313,8 @@ class MeView(APIView):
     permission_classes = [IsAuthenticated] 
      
     def get(self, request): 
-        user = request.user 
-        return Response({ 
-            'id': user.id, 
-            'username': user.username, 
-            'email': user.email, 
-            'is_staff': user.is_staff, 
-            'date_joined': user.date_joined 
-        })
+        serializer = UserRegistrationSerializer(request.user)
+        return Response(serializer.data)
 
 class ChangePasswordView(APIView): 
     """
@@ -345,10 +369,23 @@ class StatsView(APIView):
 
 class RegisterView(generics.CreateAPIView):     
     """     
-    Endpoint para cadastro de novos usuários.     
-    Acesso: Público (Qualquer um pode criar conta).     
+    Endpoint PÚBLICO para cadastro de novos usuários.
+
+    Segurança:
+    - AllowAny: Qualquer um pode criar conta
+    - Senha é hasheada automaticamente
+    - Email e username devem ser únicos (validação do Django)
+        
+    Exemplo:
+    POST /api/register/
+    {
+        "username": "novo_usuario",
+        "email": "novo@exemplo.com",
+        "password": "senha_segura_123",
+        "password_confirm": "senha_segura_123"
+    }     
     """     
     queryset = User.objects.all()     
-    permission_classes = [AllowAny] # Sobrescreve o padrão global     
+    permission_classes = [AllowAny] #  ← CRÍTICO: Acesso público     
     serializer_class = UserRegistrationSerializer
 
