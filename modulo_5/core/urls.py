@@ -4,7 +4,7 @@ from .views import (
     TarefaDeleteAPIView, DetalheTarefaAPIView,
     DuplicarTarefaAPIView, ConcluirTodasTarefasAPIView,
     TarefaListCreateAPIView, TarefaRetrieveUpdateDestroyAPIView,
-    LogoutView, MeView, ChangePasswordView, StatsView
+    LogoutView, MeView, ChangePasswordView, StatsView, RegisterView
     )
  
 app_name = 'core' 
@@ -33,5 +33,6 @@ urlpatterns = [
 
             #FILTROS
     path('stats/', StatsView.as_view(), name='stats'),
+    path('register/', RegisterView.as_view(), name='register'),
 
 ]
