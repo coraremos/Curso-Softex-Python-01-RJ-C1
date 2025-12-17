@@ -101,27 +101,51 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 class UserRegistrationSerializer(serializers.ModelSerializer):     
-    # Definimos 'write_only=True' para que a senha seja aceita no cadastro (POST),     # mas NUNCA seja devolvida na resposta (Response JSON).     
-    password = serializers.CharField(         
-        write_only=True,         
+    """
+    Serializer para cadastro de novos usuários.
+        
+    Funcionalidades:
+    1. Aceita senha na entrada (write_only)
+    2. Oculta senha na saída (nunca retorna em JSON)
+    3. Aplica hashing automático (create_user)
+    """
+      
+    password = serializers.CharField(        
+        write_only=True, #ampo aceito no POST, mas NUNCA retornado no GET
         required=True,         
-        style={'input_type': 'password'}     
+        style={'input_type': 'password'},
+        min_length=8, # Segurança: mínimo 8 caracteres
+        help_text="Senha com no mínimo 8 caracteres"
     )      
+
+    # Campo extra para confirmação (opcional, mas recomendado)
+    password_confirm = serializers.CharField(
+        write_only=True,
+        required=True,
+        style={'input_type': 'password'}
+)
 
     class Meta:         
         model = User         
-        fields = ['username', 'email', 'password']   
+        fields = ['username', 'email', 'password', 'password_confirm']
+        read_only_fields = ['id']
+        extra_kwargs = {
+            'email': {'required': True} # Tornar email obrigatório
+        }
 
     def create(self, validated_data):         
         """         
         Intercepta a criação para usar o 'create_user' e hashear a senha.         
-        """         
+        """       
+        #Remove campo extra
+        validated_data.pop('password_confirm')   
         # Extrai a senha dos dados validados         
         password = validated_data.pop('password')                  
         # Extrai email e username        
         email = validated_data.get('email', '')         
         username = validated_data['username']          
-        # Cria a instância usando o método seguro do Django         
+
+        # Cria usuário usando o método seguro do Django         
         user = User.objects.create_user(             
             username=validated_data['username'],
             email=validated_data.get('email', ''),
@@ -129,13 +153,17 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )         
 
         try:             
-            # Busca o grupo 'Comum'             
-            grupo_comum = Group.objects.get(name='Comum') 
-            # Adiciona o usuário ao grupo             
-            user.groups.add(grupo_comum)         
-        except Group.DoesNotExist:             
+            # Busca o grupo 'Comum'
+            grupo_comum = Group.objects.get(name='Comum')
+            # Adiciona o usuário ao grupo
+            user.groups.add(grupo_comum)
+        except Group.DoesNotExist:
             # Fallback: Se o grupo não existir, o usuário é criado sem grupo.             
-            # # Em produção, deveríamos logar um erro aqui.             
+            # Em produção, use logging.error() aqui.             
             pass
         return user
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+    model = User
+    fields = ['username', 'email']
+    read_only_fields = ['email']
