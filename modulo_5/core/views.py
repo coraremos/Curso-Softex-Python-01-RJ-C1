@@ -3,18 +3,20 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny
 
 from django.shortcuts import get_object_or_404
-from django.db.models import Count, Q
+from django.contrib.auth.models import User
 
 from .models import Tarefa 
 
 from .serializers import TarefaSerializer 
+from .serializers import UserRegistrationSerializer
 from datetime import datetime
 
 from rest_framework_simplejwt.views import TokenObtainPairView 
 from .serializers import CustomTokenObtainPairSerializer
-
+from .permissions import IsGerente
 
 class ListaTarefasAPIView(APIView): 
     """
@@ -204,11 +206,22 @@ class TarefaListCreateAPIView(generics.ListCreateAPIView):
 
     PROTEGIDA: Requer autenticação JWT.
     """
-    queryset = Tarefa.objects.all()
     serializer_class = TarefaSerializer
     permission_classes = [IsAuthenticated] # ← Proteção
 
-    def perform_create(self,serializer):
+    def get_queryset(self):         
+        """         
+        Sobrescreve o comportamento padrão para retornar APENAS         
+        os dados pertencentes ao usuário logado.         
+        """         
+        # 1. Recupera o usuário validado pelo JWT         
+        user = self.request.user         
+
+        # 2. Retorna o filtro. O Django fará o WHERE user_id = X no banco.         
+        return Tarefa.objects.filter(user=user)     
+     
+    def perform_create(self, serializer):         
+        # Garante que a tarefa criada seja vinculada ao usuário logado         
         serializer.save(user=self.request.user)
 
 class TarefaRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -218,9 +231,28 @@ class TarefaRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     PROTEGIDA: Requer autenticação JWT.
     """
 
-    queryset = Tarefa.objects.all()
     serializer_class = TarefaSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):         
+        """         
+        Garante que operações de detalhe (GET, PUT, DELETE por ID)         
+        só encontrem o objeto se ele pertencer ao usuário.         
+        """                
+        return Tarefa.objects.filter(user=self.request.user)
+    
+    def get_permissions(self):         
+        """         
+        Instancia e retorna a lista de permissões que esta view requer,         
+        dependendo do método HTTP da requisição.         
+        """         
+        if self.request.method == 'DELETE':             
+            # Para deletar: Precisa estar logado E ser Gerente             
+            # A ordem importa: primeiro checa login, depois o grupo             
+            return [IsAuthenticated(), IsGerente()]     
+                     
+        # Para GET, PUT, PATCH: Basta estar logado (e ser dono, garantido pelo queryset)        
+        return [IsAuthenticated()]
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     """View que usa o serializer customizado."""     
@@ -243,9 +275,6 @@ class LogoutView(APIView):
                 status=status.HTTP_400_BAD_REQUEST             
             )
 
-
-#EXERCICIOS
-
 class MeView(APIView): 
     """ Retorna dados do usuário autenticado 
 
@@ -263,8 +292,10 @@ class MeView(APIView):
             'date_joined': user.date_joined 
         })
 
-# -> Crie endpoint /api/change-password/ protegido:
 class ChangePasswordView(APIView): 
+    """
+    Cria endpoint /api/change-password/ protegido
+    """
     permission_classes = [IsAuthenticated] 
      
     def post(self, request): 
@@ -282,18 +313,6 @@ class ChangePasswordView(APIView):
         user.save() 
          
         return Response({'detail': 'Senha alterada com sucesso'})
-
-# -> Crie endpoint /api/stats/ que retorna: 
-""" 
-
-{ 
-  "total_tarefas": 10, 
-  "concluidas": 6, 
-  "pendentes": 4, 
-  "taxa_conclusao": 0.6 
-}
-
-"""
 
 class StatsView(APIView):
     """
@@ -323,3 +342,13 @@ class StatsView(APIView):
             # Arredonda a taxa para 2 casas decimais, conforme o exemplo
             "taxa_conclusao": round(taxa_conclusao, 2) 
         })
+
+class RegisterView(generics.CreateAPIView):     
+    """     
+    Endpoint para cadastro de novos usuários.     
+    Acesso: Público (Qualquer um pode criar conta).     
+    """     
+    queryset = User.objects.all()     
+    permission_classes = [AllowAny] # Sobrescreve o padrão global     
+    serializer_class = UserRegistrationSerializer
+
