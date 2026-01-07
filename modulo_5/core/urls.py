@@ -1,7 +1,7 @@
 from django.urls import path 
 from .views import (
     ListaTarefasAPIView, ContagemTarefasAPIView, 
-    TarefaDeleteAPIView, DetalheTarefaAPIView,
+    TarefaDeleteAPIView,
     DuplicarTarefaAPIView, ConcluirTodasTarefasAPIView,
     TarefaListCreateAPIView, TarefaRetrieveUpdateDestroyAPIView,
     LogoutView, MeView, ChangePasswordView, StatsView, RegisterView
@@ -13,9 +13,6 @@ urlpatterns = [
     # /api/tarefas/ → ListaTarefasAPIView 
     
 # Rotas de Tarefas (CRUD e filtros)
-                #CREATE
-        path('tarefas/<int:pk>/', DetalheTarefaAPIView.as_view(), name='detalhe_tarefa'),
-
                 #READ
         path('me/', MeView.as_view(), name='me'),
         path('tarefas/', ListaTarefasAPIView.as_view(), name='lista-tarefas'), 
